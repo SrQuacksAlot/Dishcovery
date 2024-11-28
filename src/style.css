@@ -1,0 +1,51 @@
+.debug {
+  height: 100vh;
+  border-style: solid;
+}
+
+.quantity {
+  text-align: right;
+}
+
+.right-align {
+  text-align: right;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  flex: 0 0 320px; /* Fixed constant width for the sidebar */
+  height: 100%; 
+  border-style: solid;
+  background-color: #f0f0f0; /* Light background for better contrast */
+}
+
+/* Main Content Styling */
+.mainContent {
+  flex: 1; /* Let mainContent use remaining space */
+}
+
+/* Parent Flex Container */
+.flexParent {
+  display: flex;
+  flex-direction: row; /* Sidebar and main content side by side */
+  height: 100vh; 
+}
+
+/* Media Query for Portrait Orientation */
+@media (max-aspect-ratio: 3/4) {
+  .flexParent {
+      flex-direction: column; /* Stack sidebar and main content vertically */
+      /* height: auto; Adjust height dynamically */
+  }
+
+  .sidebar {
+      width: 100%; /* Sidebar takes up full width in portrait mode */
+      height: fit-content; /* Adjust height dynamically */
+      flex: 0 0 auto; /* Adjust sidebar height based on its content */
+  }
+
+  .mainContent {
+      flex: 1; /* Adjust dynamically */
+      width: 100%; /* Full width in portrait mode */
+  }
+}
