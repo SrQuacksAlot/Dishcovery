@@ -31,11 +31,11 @@ export function SearchFormView(props) {
     }
 
     function handleIngredientSearch(){
-        windows.location.hash = "#/ingredient-search";
+        window.location.hash = "#/ingredient-search";
     }
 
     function handleNutritionalSearch(){
-        windows.location.hash = "#/Nutritional-search";
+        window.location.hash = "#/nutritional-search";
     }
 
     return (

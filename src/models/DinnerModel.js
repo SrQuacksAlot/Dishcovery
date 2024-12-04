@@ -1,4 +1,4 @@
-import { getDishDetails, searchDishes } from "/src/utils/dishSource.js"; 
+import { getDishDetails, searchDishes, searchByIngredients } from "/src/utils/dishSource.js"; 
 import { resolvePromise } from "/src/utils/resolvePromise";
 
 /* 
@@ -10,6 +10,7 @@ const model = {
     dishes: [],
     currentDishId: null, 
     searchParams: {},
+    searchIngredients: [], // Store ingredients for ingredient-based search
     searchResultsPromiseState: {},
     currentDishPromiseState: {},
 
@@ -50,11 +51,25 @@ const model = {
         this.searchParams.type = type;
     },
 
+    // Set the ingredients for ingredient-based search
+    setSearchIngredients(ingredients) {
+        if (Array.isArray(ingredients)) {
+            this.searchIngredients = ingredients;
+        } else {
+            throw new Error("Ingredients must be an array");
+        }
+    },
+
+    // Perform the ingredient-based search
+    doIngredientSearch() {
+        resolvePromise(searchByIngredients(this.searchIngredients), this.searchResultsPromiseState);
+    },
+
     doSearch(params) {
         resolvePromise(searchDishes(params), this.searchResultsPromiseState);
     },
  
-    // more methods will be added here, don't forget to separate them with comma!
+    // more methods will be added here, don't forget to separate them with commas!
 };
 
-export {model};
+export { model };

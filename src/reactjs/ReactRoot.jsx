@@ -4,6 +4,7 @@ import { Summary } from "/src/presenters/summaryPresenter.jsx";
 import { Sidebar } from "/src/presenters/sidebarPresenter.jsx"; 
 import { Details } from "/src/presenters/detailsPresenter.jsx"; 
 import { Search }  from "/src/presenters/searchPresenter.jsx";
+import { IngredientSearchPresenter }  from "/src/presenters/IngredientSearchPresenter.jsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 
@@ -45,6 +46,10 @@ function makeRouter(model) {
     {
       path: "/details",
       element: <Details model={model} />,
+    },
+    {
+      path: "/ingredient-search",
+      element: <IngredientSearchPresenter model={model} />,
     },
   ]);
 }
