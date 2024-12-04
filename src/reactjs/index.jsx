@@ -2,7 +2,7 @@ import "/src/utils/teacherFetch.js"; // protection against fetch() in infinite r
 import { createElement} from "react";
 import { createRoot } from "react-dom/client";
 import { ReactRoot } from "/src/reactjs/ReactRoot.jsx";
-import "/src/firebase/firebaseModel.js";
+import { connectToFirebase } from "/src/firebase/firebaseModel.js";
 
 
 window.React= {createElement:createElement}; // needed in the lab because it works with both React and Vue
@@ -12,7 +12,7 @@ configure({ enforceActions: "never", });  // we don't use Mobx actions
 
 
 // (1) ------------ retrieve the application state (model) ----------
-import { model } from '/src/DinnerModel.js';
+import { model } from '/src/models/DinnerModel.js';
 
 const reactiveModel= observable(model); /* "TODO, make a reactive model here"; */
 
@@ -33,7 +33,6 @@ window.myModel= reactiveModel;
 // making some example dishes available at the console:
 import dishesConst from "/test/dishesConst.js";
 window.dishesConst= dishesConst;
-import { connectToFirebase } from "/src/firebaseModel.js";
 function watchFunction(trackerACB, effectACB) {reaction(trackerACB, effectACB);}
 connectToFirebase(reactiveModel, watchFunction);
 

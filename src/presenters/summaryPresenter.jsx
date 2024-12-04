@@ -1,4 +1,4 @@
-import { SummaryView } from "../views/summaryView.jsx";
+import { SummaryView } from "/src/views/summaryView.jsx";
 import { observer } from "mobx-react-lite";
 import { shoppingList } from "/src/utils/utilities.js";
 
