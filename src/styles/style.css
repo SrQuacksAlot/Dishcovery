@@ -56,11 +56,14 @@
   margin: 0;
   max-height: 150px; /* Limit the height */
   overflow-y: auto; /* Add scroll if needed */
+  border: 1px solid #ccc; /* Add border for visibility */
+  position: absolute; /* Position it absolutely */
+  background: white; /* Background color */
+  z-index: 1; /* Ensure it appears above other elements */
 }
 
 .suggestions li {
   padding: 8px;
-  cursor: pointer;
 }
 
 .suggestions li:hover {

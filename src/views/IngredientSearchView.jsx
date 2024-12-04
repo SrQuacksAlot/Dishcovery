@@ -48,20 +48,13 @@ export function IngredientSearchView(props) {
                 value={ingredient}
                 onChange={handleIngredientChangeACB}
                 placeholder="Enter ingredient"
+                style={{ position: 'relative' }} // Ensure relative positioning for dropdown
             />
             <button onClick={handleAddIngredientACB}>Add Ingredient</button>
             <button onClick={handleBackClickACB}>Back to Search</button>
-            <div>
-                <h4>Selected Ingredients:</h4>
-                <ul>
-                    {props.ingredients.map((ing, index) => (
-                        <li key={index}>{ing}</li>
-                    ))}
-                </ul>
-            </div>
             {/* Dropdown for suggestions */}
             {suggestions.length > 0 && (
-                <ul className="suggestions" style={{ border: '1px solid #ccc', position: 'absolute', background: 'white', zIndex: 1 }}>
+                <ul className="suggestions">
                     {suggestions.map((suggestion, index) => (
                         <li key={index} onClick={() => {
                             setIngredient(suggestion);
@@ -72,6 +65,15 @@ export function IngredientSearchView(props) {
                     ))}
                 </ul>
             )}
+            <div>
+                <h4>Selected Ingredients:</h4>
+                <ul>
+                    {props.ingredients.map((ing, index) => (
+                        <li key={index}>{ing}</li>
+                    ))}
+                </ul>
+            </div>
+            
         </div>
     );
 }
