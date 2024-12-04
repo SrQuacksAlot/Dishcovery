@@ -29,6 +29,9 @@ export function SearchFormView(props) {
     function handleSummaryClickACB() {
         window.location.hash = "#/summary"; // Navigate to summary page
     }
+    function handleIngredientSearch(){
+        windows.location.hash = "#/ingredient-search";
+    }
 
     return (
         <div>
@@ -52,6 +55,9 @@ export function SearchFormView(props) {
 
             {/* summary button */}
             <button onClick={handleSummaryClickACB}>Summary</button>
+
+            {/* summary button */}
+            <button onClick={handleIngredientSearch}>Ingredient Search</button>
         </div>
     );
 }
