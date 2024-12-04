@@ -1,5 +1,5 @@
-import { getDishDetails, searchDishes } from "/src/dishSource.js"; // Import necessary functions for API calls
-import { resolvePromise } from "./resolvePromise";
+import { getDishDetails, searchDishes } from "/src/utils/dishSource.js"; 
+import { resolvePromise } from "/src/utils/resolvePromise";
 
 /* 
    The Model keeps the state of the application (Application State). 

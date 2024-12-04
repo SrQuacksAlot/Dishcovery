@@ -1,5 +1,5 @@
-import {sortIngredients} from "/src/utilities.js";
-import "/src/style.css"
+import {sortIngredients} from "/src/utils/utilities.js";
+import "/src/styles/style.css"
 
 /* Functional JSX component. Name must start with capital letter */
 export function SummaryView(props){

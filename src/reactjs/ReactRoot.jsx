@@ -1,9 +1,9 @@
 // ReactRoot.jsx
 import { observer } from 'mobx-react-lite';
-import { Summary } from "./summaryPresenter.jsx";
-import { Sidebar } from "./sidebarPresenter.jsx"; 
-import { Details } from "./detailsPresenter.jsx"; 
-import { Search }  from "./searchPresenter.jsx";
+import { Summary } from "/src/presenters/summaryPresenter.jsx";
+import { Sidebar } from "/src/presenters/sidebarPresenter.jsx"; 
+import { Details } from "/src/presenters/detailsPresenter.jsx"; 
+import { Search }  from "/src/presenters/searchPresenter.jsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 

@@ -1,8 +1,8 @@
-import "/src/teacherFetch.js"; // protection against fetch() in infinite re-render
+import "/src/utils/teacherFetch.js"; // protection against fetch() in infinite re-render
 import { createElement} from "react";
 import { createRoot } from "react-dom/client";
 import { ReactRoot } from "/src/reactjs/ReactRoot.jsx";
-import "/src/firebaseModel.js";
+import "/src/firebase/firebaseModel.js";
 
 
 window.React= {createElement:createElement}; // needed in the lab because it works with both React and Vue
