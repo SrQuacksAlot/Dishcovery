@@ -1,10 +1,10 @@
-import "/src/teacherFetch.js"; // protection against fetch() in infinite re-render
+import "/src/utils/teacherFetch.js"; // protection against fetch() in infinite re-render
 import { createApp, h } from "vue";
 window.React= {createElement:h};  // needed in the lab because it works with both React and Vue
 
 
 // (1) ------------ retrieve the application state (model) ----------
-import { model } from "/src/DinnerModel.js";
+import { model } from "/src/models/DinnerModel.js";
 import { reactive } from "vue";
 
 const reactiveModel= "TODO, make a reactive model here";

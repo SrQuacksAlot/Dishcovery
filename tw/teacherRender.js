@@ -1,4 +1,4 @@
-import "/src/teacherFetch.js";
+import "/src/utils/teacherFetch.js";
 import { observable, configure } from "mobx";
 import { reactive } from "vue";
 

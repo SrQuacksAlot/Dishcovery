@@ -1,11 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get, set} from "/src/teacherFirebase.js";
+import { getDatabase, ref, get, set} from "/src/firebase/teacherFirebase.js";
 
 
 
 /* you will find 2 imports in firebaseModel, add the configuration and instantiate the app and database: */
-import {firebaseConfig} from "/src/firebaseConfig.js";
-import { getMenuDetails } from "./dishSource";
+import {firebaseConfig} from "/src/firebase/firebaseConfig.js";
+import { getMenuDetails } from "/src/utils/dishSource";
 const app= initializeApp(firebaseConfig)
 const db= getDatabase(app)
 

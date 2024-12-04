@@ -8,7 +8,7 @@ import { resolvePromise } from "/src/utils/resolvePromise";
 const model = {  
     numberOfGuests: 2,
     dishes: [],
-    currentDishId: null,  // null means "intentionally empty"
+    currentDishId: null, 
     searchParams: {},
     searchResultsPromiseState: {},
     currentDishPromiseState: {},
