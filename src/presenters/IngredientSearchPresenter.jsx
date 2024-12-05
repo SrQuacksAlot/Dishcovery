@@ -37,17 +37,18 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
 
     return (
         <IngredientSearchView
-            ingredient={model.currentIngredient}
-            suggestions={model.suggestions}
-            ingredients={model.searchIngredients}
-            onIngredientChange={handleIngredientChange}
-            onSelectSuggestion={handleSelectSuggestion}
-            onRemoveIngredient={handleRemoveIngredient}
-            onClearSuggestions={model.clearSuggestions} // Pass the clearSuggestions method
-            onSearchDishes={handleSearchDishes} // Pass the search dishes handler
-            onShowSidebar={handleShowSidebar} // Pass the show sidebar handler
+          ingredient={model.currentIngredient}
+          suggestions={model.suggestions}
+          ingredients={model.searchIngredients}
+          onIngredientChange={handleIngredientChange}
+          onSelectSuggestion={handleSelectSuggestion}
+          onRemoveIngredient={handleRemoveIngredient}
+          onClearSuggestions={() => model.clearSuggestions()} // Wrap in an arrow function
+          onClearCurrentIngredient={() => model.clearCurrentIngredient()} // New prop
+          onSearchDishes={handleSearchDishes} // Pass the search dishes handler
+          onShowSidebar={handleShowSidebar} // Pass the show sidebar handler
         />
-    );
+      );
 });
 
 export { IngredientSearchPresenter };

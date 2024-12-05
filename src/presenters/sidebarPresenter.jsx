@@ -2,34 +2,40 @@ import { SidebarView } from "/src/views/sidebarView.jsx";
 import { observer } from "mobx-react-lite";
 
 const Sidebar = observer(function SidebarRender(props) {
+    const { model } = props;
+
     // Event handler for changing the number of guests
     function handleNumberChange(newNumber) {
-        props.model.setNumberOfGuests(newNumber);
+        model.setNumberOfGuests(newNumber);
     }
 
     // Event handler for selecting a dish
-    function handleDishClick(dish) {  
-        props.model.setCurrentDishId(dish.id);
+    function handleDishClick(dish) {
+        model.setCurrentDishId(dish.id);
     }
 
     // Event handler for removing a dish
-    function deleteDish(dish) {  
-        props.model.removeFromMenu(dish);
+    function deleteDish(dish) {
+        model.removeFromMenu(dish);
     }
 
     function handleShowIngredientSearch() {
-        // You can add specific logic here based on your app's navigation or state management
-        props.model.toggleIngredientSearch();
+        model.toggleIngredientSearch();
+    }
+
+    function handleNavigateToNutritionalSearch() {
+        window.location.hash = "#/nutritional-search"; // Navigate to Nutritional Search page
     }
 
     return (
         <SidebarView
-            number={props.model.numberOfGuests}
-            dishes={props.model.dishes}
+            number={model.numberOfGuests}
+            dishes={model.dishes}
             onNumberChange={handleNumberChange}
-            onDishClick={handleDishClick}  
-            deleteDish={deleteDish} 
+            onDishClick={handleDishClick}
+            deleteDish={deleteDish}
             onShowIngredientSearch={handleShowIngredientSearch}
+            onNavigateToNutritionalSearch={handleNavigateToNutritionalSearch}
         />
     );
 });

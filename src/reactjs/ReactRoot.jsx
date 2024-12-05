@@ -4,6 +4,8 @@ import { Sidebar } from "/src/presenters/sidebarPresenter.jsx";
 import { Details } from "/src/presenters/detailsPresenter.jsx"; 
 import { Search }  from "/src/presenters/searchPresenter.jsx";
 import { IngredientSearchPresenter }  from "/src/presenters/IngredientSearchPresenter.jsx";
+import { NutritionalSearchPresenter } from '/src/presenters/NutritionalSearchPresenter.jsx';
+import { NutrientSearchResultsPresenter } from '/src/presenters/NutrientSearchResultsPresenter.jsx'; // We'll create this next
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 const ReactRoot = observer(function ReactRoot(props) {
@@ -48,6 +50,14 @@ function makeRouter(model) {
     {
       path: "/details",
       element: <Details model={model} />,
+    },
+    {
+      path: "/nutritional-search",
+      element: <NutritionalSearchPresenter model={model} />,
+    },
+    {
+      path: "/nutrient-search-results",
+      element: <NutrientSearchResultsPresenter model={model} />,
     },
   ]);
 }

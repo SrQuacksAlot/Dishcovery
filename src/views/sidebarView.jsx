@@ -7,20 +7,25 @@ export function SidebarView(props) {
     const totalPrice = (menuPrice(sortedDishes) * props.number).toFixed(2);
 
     // Event handler for increasing the number
-    function increaseNumberACB() {props.onNumberChange(props.number + 1);}
+    function increaseNumberACB() { props.onNumberChange(props.number + 1); }
 
     // Event handler for decreasing the number
-    function decreaseNumberACB() {props.onNumberChange(props.number - 1);}
+    function decreaseNumberACB() { props.onNumberChange(props.number - 1); }
 
     function showIngredientSearchACB() {
-        // Instead of directly modifying props (which doesn't work in React), 
-        // call a method passed from the presenter
         props.onShowIngredientSearch();
+        window.location.hash = "#/search";
     }
+
+    function navigateToNutritionalSearchACB() {
+        props.onNavigateToNutritionalSearch();
+        window.location.hash = "#/nutritional-search"; // Navigate to Nutritional Search page
+    }
+
     // Callback function for rendering each dish row
     function dishTableRowCB(dish) {
         // Event handler for deleting a dish
-        function xClickedACB() {props.deleteDish(dish);}
+        function xClickedACB() { props.deleteDish(dish); }
         // Event handler for clicking the dish link
         function dishLinkClickedACB(evt) {
             evt.preventDefault(); // Prevent default browser behavior
@@ -29,13 +34,12 @@ export function SidebarView(props) {
         }
 
         return (
-            
             <tr key={dish.id}>
                 <td>
                     <button onClick={xClickedACB}>X</button>
                 </td>
                 <td>
-                <a
+                    <a
                         href={`#/details/${dish.id}`}
                         onClick={dishLinkClickedACB}
                         style={{ textDecoration: "none", color: "inherit" }}
@@ -67,7 +71,12 @@ export function SidebarView(props) {
             <button onClick={decreaseNumberACB} disabled={props.number <= 1}>-</button>
             <span>{props.number}</span>
             <button onClick={increaseNumberACB}>+</button>
-            <button onClick={showIngredientSearchACB}>Show Ingredient Search</button>
+
+            <div className="sidebar-buttons">
+                <button onClick={showIngredientSearchACB}>Show Ingredient Search</button>
+                <button onClick={navigateToNutritionalSearchACB}>Nutrition Search</button>
+            </div>
+
             <table>
                 <tbody>
                     {sortedDishes.map(dishTableRowCB)}
