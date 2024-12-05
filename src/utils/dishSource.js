@@ -128,3 +128,39 @@ export function searchByIngredients(ingredientsArray) {
         .then(parseResultsACB)
         .catch(handleFetchErrorACB);
 }
+
+export function fetchIngredientSuggestions(input) {
+    // Construct the URL for the autocomplete endpoint
+    const url = new URL(`${PROXY_URL}/food/ingredients/autocomplete`);
+    const queryString = new URLSearchParams({
+      query: input,
+      number: 10, // Adjust as needed
+    }).toString();
+    url.search = `?${queryString}`;
+  
+    // Define the fetch options with HTTP headers
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'X-DH2642-Key': PROXY_KEY,
+        'X-DH2642-Group': GROUP_NUMBER,
+      }
+    };
+
+    // Fetch suggestions
+    return fetch(url, fetchOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Ensure we return an array of names, or an empty array if no results
+        return Array.isArray(data) ? data.map(item => item.name) : [];
+      })
+      .catch(error => {
+        console.error("Error fetching ingredient suggestions:", error);
+        return []; // Return an empty array in case of error
+      });
+}

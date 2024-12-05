@@ -49,23 +49,124 @@
       width: 100%; /* Full width in portrait mode */
   }
 }
+/* Ingredient Search Specific Styles */
+.ingredient-search-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-.suggestions {
+.ingredient-search-header {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.ingredient-search-container {
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.ingredient-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.ingredient-search-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.ingredient-suggestions {
+  position: absolute;
+  top: 100%; /* Positioned immediately after the input */
+  left: 0;
+  width: 100%; /* Exactly same width as the input */
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-top: none; /* Remove top border to sit flush with input */
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin-top: 0; /* Ensure no extra spacing */
+  box-sizing: border-box; /* Ensure border is included in width */
+}
+
+.ingredient-suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.ingredient-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ingredient-action-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ingredient-action-btn:hover {
+  background-color: #357abd;
+}
+
+.ingredient-action-btn.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.ingredient-action-btn.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.ingredient-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
-  max-height: 150px; /* Limit the height */
-  overflow-y: auto; /* Add scroll if needed */
-  border: 1px solid #ccc; /* Add border for visibility */
-  position: absolute; /* Position it absolutely */
-  background: white; /* Background color */
-  z-index: 1; /* Ensure it appears above other elements */
 }
 
-.suggestions li {
-  padding: 8px;
+.ingredient-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.suggestions li:hover {
-  background-color: #f0f0f0; /* Highlight on hover */
+.ingredient-list-item-remove {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ingredient-list-item-remove:hover {
+  background-color: #ff5252;
 }
