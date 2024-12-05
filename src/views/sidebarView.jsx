@@ -12,6 +12,11 @@ export function SidebarView(props) {
     // Event handler for decreasing the number
     function decreaseNumberACB() {props.onNumberChange(props.number - 1);}
 
+    function showIngredientSearchACB() {
+        // Instead of directly modifying props (which doesn't work in React), 
+        // call a method passed from the presenter
+        props.onShowIngredientSearch();
+    }
     // Callback function for rendering each dish row
     function dishTableRowCB(dish) {
         // Event handler for deleting a dish
@@ -24,6 +29,7 @@ export function SidebarView(props) {
         }
 
         return (
+            
             <tr key={dish.id}>
                 <td>
                     <button onClick={xClickedACB}>X</button>
@@ -61,6 +67,7 @@ export function SidebarView(props) {
             <button onClick={decreaseNumberACB} disabled={props.number <= 1}>-</button>
             <span>{props.number}</span>
             <button onClick={increaseNumberACB}>+</button>
+            <button onClick={showIngredientSearchACB}>Show Ingredient Search</button>
             <table>
                 <tbody>
                     {sortedDishes.map(dishTableRowCB)}

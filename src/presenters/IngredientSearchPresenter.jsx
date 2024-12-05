@@ -31,6 +31,10 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
         model.doIngredientSearch(); // Call the method to search dishes based on ingredients
     };
 
+    const handleShowSidebar = () => {
+        model.toggleIngredientSearch();
+    };
+
     return (
         <IngredientSearchView
             ingredient={model.currentIngredient}
@@ -41,6 +45,7 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
             onRemoveIngredient={handleRemoveIngredient}
             onClearSuggestions={model.clearSuggestions} // Pass the clearSuggestions method
             onSearchDishes={handleSearchDishes} // Pass the search dishes handler
+            onShowSidebar={handleShowSidebar} // Pass the show sidebar handler
         />
     );
 });

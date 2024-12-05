@@ -1,4 +1,3 @@
-// ReactRoot.jsx
 import { observer } from 'mobx-react-lite';
 import { Summary } from "/src/presenters/summaryPresenter.jsx";
 import { Sidebar } from "/src/presenters/sidebarPresenter.jsx"; 
@@ -6,7 +5,6 @@ import { Details } from "/src/presenters/detailsPresenter.jsx";
 import { Search }  from "/src/presenters/searchPresenter.jsx";
 import { IngredientSearchPresenter }  from "/src/presenters/IngredientSearchPresenter.jsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-
 
 const ReactRoot = observer(function ReactRoot(props) {
   if (!props.model.ready) {
@@ -20,7 +18,11 @@ const ReactRoot = observer(function ReactRoot(props) {
   return (
     <div className="flexParent">
       <div className="sidebar">
-        <Sidebar model={props.model} />
+        {props.model.showIngredientSearch ? (
+          <IngredientSearchPresenter model={props.model} />
+        ) : (
+          <Sidebar model={props.model} />
+        )}
       </div>
       <div className="mainContent">
         <RouterProvider router={makeRouter(props.model)} />
@@ -47,12 +49,7 @@ function makeRouter(model) {
       path: "/details",
       element: <Details model={model} />,
     },
-    {
-      path: "/ingredient-search",
-      element: <IngredientSearchPresenter model={model} />,
-    },
   ]);
 }
 
 export { ReactRoot, makeRouter };
-

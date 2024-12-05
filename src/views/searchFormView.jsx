@@ -30,9 +30,7 @@ export function SearchFormView(props) {
         window.location.hash = "#/summary"; // Navigate to summary page
     }
 
-    function handleIngredientSearch(){
-        window.location.hash = "#/ingredient-search";
-    }
+
 
     function handleNutritionalSearch(){
         window.location.hash = "#/nutritional-search";
@@ -61,8 +59,6 @@ export function SearchFormView(props) {
             {/* summary button */}
             <button onClick={handleSummaryClickACB}>Summary</button>
 
-            {/* ingredient search button */}
-            <button onClick={handleIngredientSearch}>Ingredient Search</button>
             
             {/* Nutritional search button */}
             <button onClick={handleNutritionalSearch}>Nutritional Search</button>

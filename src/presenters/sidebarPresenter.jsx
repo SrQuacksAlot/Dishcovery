@@ -17,13 +17,19 @@ const Sidebar = observer(function SidebarRender(props) {
         props.model.removeFromMenu(dish);
     }
 
+    function handleShowIngredientSearch() {
+        // You can add specific logic here based on your app's navigation or state management
+        props.model.toggleIngredientSearch();
+    }
+
     return (
         <SidebarView
             number={props.model.numberOfGuests}
             dishes={props.model.dishes}
             onNumberChange={handleNumberChange}
             onDishClick={handleDishClick}  
-            deleteDish={deleteDish}  
+            deleteDish={deleteDish} 
+            onShowIngredientSearch={handleShowIngredientSearch}
         />
     );
 });

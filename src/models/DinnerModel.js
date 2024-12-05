@@ -11,6 +11,7 @@ const model = {
     currentDishPromiseState: {},
     suggestions: [], 
     currentIngredient: "", 
+    showIngredientSearch: false, // New property to manage visibility
 
     // Add this method to add ingredients to searchIngredients
     addIngredient(ingredient) {
@@ -22,6 +23,12 @@ const model = {
 
     setCurrentIngredient(value) {
         this.currentIngredient = value;
+    },
+
+    
+
+    toggleIngredientSearch() {
+        this.showIngredientSearch = !this.showIngredientSearch; // Toggle the visibility
     },
 
     setCurrentDishId(dishId) {
