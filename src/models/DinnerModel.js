@@ -19,7 +19,6 @@ import {
     currentIngredient: "",
     showIngredientSearch: false, // New property to manage visibility
     nutrientSearchParams: {}, // Stores the nutrient search parameters
-    nutrientSearchResultsPromiseState: {}, // Manages the promise state for nutrient search results
     showNutrientSearch: false,
 
     // Method to set nutrient search parameters
@@ -30,7 +29,7 @@ import {
     doNutrientSearch  () {
         resolvePromise(
         searchRecipesByNutrients(this.nutrientSearchParams),
-        this.nutrientSearchResultsPromiseState
+        this.searchResultsPromiseState 
         );
     },
     // Add this method to add ingredients to searchIngredients
@@ -50,11 +49,7 @@ import {
     },
 
     toggleNutrientSearch() {
-      console.log("ingred",this.showIngredientSearch)
-      console.log("Before toggle:", this.showNutrientSearch); // Log the current state
       this.showNutrientSearch = !this.showNutrientSearch; // Toggle the visibility
-      console.log("After toggle:", this.showNutrientSearch); // Log the new state
-      console.log("ingred",this.showIngredientSearch)
     },
   
     setCurrentDishId (dishId) {
@@ -125,11 +120,11 @@ import {
     },
   
     // Method to fetch suggestions based on input
-    fetchSuggestions(input) {
+    async fetchSuggestions(input) {
       try {
         // Only proceed if input is more than 2 characters long
         if (input.trim().length > 2) {
-          const suggestions = fetchIngredientSuggestions(input);
+          const suggestions = await fetchIngredientSuggestions(input);
   
           // Check if suggestions array has items
           if (Array.isArray(suggestions) && suggestions.length > 0) {

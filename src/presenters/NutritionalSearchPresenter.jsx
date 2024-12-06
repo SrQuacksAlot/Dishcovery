@@ -1,5 +1,3 @@
-// NutritionalSearchPresenter.jsx
-
 import { observer } from 'mobx-react-lite';
 import { NutritionalSearchView } from '/src/views/NutritionalSearchView.jsx';
 
@@ -16,13 +14,12 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
   };
 
   const handleSearch = () => {
-    model.doNutrientSearch();
-    window.location.hash = '#/nutrient-search-results'; // Navigate to results
+    model.doNutrientSearch(); // Now uses searchResultsPromiseState
   };
 
   const handleShowSidebar = () => {
     model.toggleNutrientSearch();
-  }
+  };
 
   return (
     <NutritionalSearchView
@@ -30,7 +27,6 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
       onInputChange={handleInputChange}
       onSearch={handleSearch}
       onShowSidebar={handleShowSidebar}
-
     />
   );
 });

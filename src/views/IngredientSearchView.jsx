@@ -15,17 +15,7 @@ export function IngredientSearchView(props) {
     function handleShowSidebarClick() {
       props.onShowSidebar(); // Function to show the sidebar
     }
-  
-    function handleKeyDownACB(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent form submission if inside a form
-        if (props.ingredient.trim()) {
-          props.onSelectSuggestion(props.ingredient.trim());
-          props.onClearSuggestions();
-          props.onClearCurrentIngredient(); // Clear the input field
-        }
-      }
-    }
+
   
     return (
       <div className="ingredient-search-wrapper">
@@ -36,7 +26,6 @@ export function IngredientSearchView(props) {
             className="ingredient-search-input"
             value={props.ingredient}
             onChange={handleIngredientChangeACB}
-            onKeyDown={handleKeyDownACB}
             placeholder="Enter ingredient"
           />
   

@@ -1,6 +1,5 @@
-// NutritionalSearchView.jsx
-
 export function NutritionalSearchView(props) {
+  // Callbacks for various actions
   function handleInputChange(event) {
     const { name, value } = event.target;
     props.onInputChange(name, value);
@@ -9,105 +8,53 @@ export function NutritionalSearchView(props) {
   function handleSearchClick() {
     props.onSearch();
   }
+
   function handleShowSidebarClick() {
-    props.onShowSidebar(); // Function to show the sidebar
+    props.onShowSidebar();
   }
 
+  // Callback to render nutrient input fields
+  function renderNutrientInput(labelText, name, value) {
+    return (
+      <div className="nutrient-input-field">
+        <label>
+          {labelText}
+          <input
+            type="number" 
+            name={name}
+            value={value || ''}
+            onChange={handleInputChange}
+          />
+        </label>
+      </div>
+    );
+  }
+
+  // Rendering all nutrient input groups
+  function renderNutrientInputGroups() {
+    return (
+      <div className="nutritional-search-container">
+        {renderNutrientInput("Min Calories:", "minCalories", props.nutrientParams.minCalories)}
+        {renderNutrientInput("Max Calories:", "maxCalories", props.nutrientParams.maxCalories)}
+        {renderNutrientInput("Min Protein (g):", "minProtein", props.nutrientParams.minProtein)}
+        {renderNutrientInput("Max Protein (g):", "maxProtein", props.nutrientParams.maxProtein)}
+        {renderNutrientInput("Min Fat (g):", "minFat", props.nutrientParams.minFat)}
+        {renderNutrientInput("Max Fat (g):", "maxFat", props.nutrientParams.maxFat)}
+        {renderNutrientInput("Min Carbs (g):", "minCarbs", props.nutrientParams.minCarbs)}
+        {renderNutrientInput("Max Carbs (g):", "maxCarbs", props.nutrientParams.maxCarbs)}
+      </div>
+    );
+  }
+
+  // Main return without search results
   return (
     <div className="nutritional-search-wrapper">
-      <button
-            
-            onClick={handleShowSidebarClick}
-          >
-            Show Sidebar
-          </button>
+      <button onClick={handleShowSidebarClick}>Show Sidebar</button>
       <h3 className="nutritional-search-header">Nutritional Search</h3>
-      <div className="nutritional-search-container">
-        <div className="nutrient-input-group">
-          <label>
-            Min Calories:
-            <input
-              type="number"
-              name="minCalories"
-              value={props.nutrientParams.minCalories || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Max Calories:
-            <input
-              type="number"
-              name="maxCalories"
-              value={props.nutrientParams.maxCalories || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-        </div>
-        <div className="nutrient-input-group">
-          <label>
-            Min Protein (g):
-            <input
-              type="number"
-              name="minProtein"
-              value={props.nutrientParams.minProtein || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Max Protein (g):
-            <input
-              type="number"
-              name="maxProtein"
-              value={props.nutrientParams.maxProtein || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-        </div>
-        <div className="nutrient-input-group">
-          <label>
-            Min Fat (g):
-            <input
-              type="number"
-              name="minFat"
-              value={props.nutrientParams.minFat || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Max Fat (g):
-            <input
-              type="number"
-              name="maxFat"
-              value={props.nutrientParams.maxFat || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-        </div>
-        <div className="nutrient-input-group">
-          <label>
-            Min Carbs (g):
-            <input
-              type="number"
-              name="minCarbs"
-              value={props.nutrientParams.minCarbs || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Max Carbs (g):
-            <input
-              type="number"
-              name="maxCarbs"
-              value={props.nutrientParams.maxCarbs || ''}
-              onChange={handleInputChange}
-            />
-          </label>
-        </div>
-        {/* Add more nutrient inputs as needed */}
-        <button className="nutritional-search-btn" onClick={handleSearchClick}>
-          Search Recipes
-        </button>
-      </div>
+      {renderNutrientInputGroups()}
+      <button className="nutritional-search-btn" onClick={handleSearchClick}>
+        Search Dishes
+      </button>
     </div>
   );
 }

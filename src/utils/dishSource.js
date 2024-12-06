@@ -28,17 +28,14 @@ function apiRequest(endpoint, params = {}, transformResponse) {
     });
 }
 
-// 1. Ingredient Search
 export function searchIngredients(query, number = 10) {
     return apiRequest('/food/ingredients/search', { query, number });
   }
   
-// 1.1 Get Ingredient Substitutes
 export function getIngredientSubstitutes(ingredientName) {
 return apiRequest('/food/ingredients/substitutes', { ingredientName });
 }
 
-// 1.2 Get Ingredient Information/Nutrition
 export function getIngredientInformation(id, amount = 100, unit = 'g') {
 return apiRequest('/food/ingredients/${id}/information', {
     amount,
@@ -46,12 +43,10 @@ return apiRequest('/food/ingredients/${id}/information', {
 });
 }
 
-// 4. Search Recipes by Nutrients
 export function searchRecipesByNutrients(nutrientParams) {
 return apiRequest('/recipes/findByNutrients', nutrientParams);
 }
 
-// Specific functions using the generalized apiRequest function
 
 export function searchDishes(searchParams) {
   return apiRequest('/recipes/complexSearch', searchParams, data => data.results || []);
