@@ -1,153 +1,132 @@
 import {
-    getDishDetails,
-    searchDishes,
-    searchByIngredients,
-    fetchIngredientSuggestions,
-    searchRecipesByNutrients,
-  } from "/src/utils/dishSource.js";
-  import { resolvePromise } from "/src/utils/resolvePromise";
-  
-  const model = {
-    numberOfGuests: 2,
-    dishes: [],
-    currentDishId: null,
-    searchParams: {},
-    searchIngredients: [], // Store ingredients for ingredient-based search
-    searchResultsPromiseState: {},
-    currentDishPromiseState: {},
-    suggestions: [],
-    currentIngredient: "",
-    showIngredientSearch: false, // New property to manage visibility
-    nutrientSearchParams: {}, // Stores the nutrient search parameters
-    showNutrientSearch: false,
+  getDishDetails,
+  searchDishes,
+  fetchIngredientSuggestions,
+} from "/src/utils/dishSource.js";
+import { resolvePromise } from "/src/utils/resolvePromise";
 
-    // Method to set nutrient search parameters
-    setNutrientSearchParams  (params) {
-        this.nutrientSearchParams = params;
-    },
-    // Method to perform nutrient search
-    doNutrientSearch  () {
-        resolvePromise(
-        searchRecipesByNutrients(this.nutrientSearchParams),
-        this.searchResultsPromiseState 
-        );
-    },
-    // Add this method to add ingredients to searchIngredients
-    addIngredient (ingredient) {
-      // Prevent duplicate ingredients
-      if (!this.searchIngredients.includes(ingredient.trim())) {
-        this.searchIngredients = [...this.searchIngredients, ingredient.trim()];
-      }
-    },
-  
-    setCurrentIngredient (value) {
-      this.currentIngredient = value;
-    },
-  
-    toggleIngredientSearch () {
-      this.showIngredientSearch = !this.showIngredientSearch; // Toggle the visibility
-    },
+const model = {
+  numberOfGuests: 2,
+  dishes: [],
+  currentDishId: null,
+  searchParams: {}, // Stores general search parameters
+  searchIngredients: [], // Stores ingredients for ingredient-based search
+  searchResultsPromiseState: {},
+  currentDishPromiseState: {},
+  suggestions: [],
+  currentIngredient: "", // Track current ingredient being typed
+  showIngredientSearch: false,
+  nutrientSearchParams: {}, // Stores nutrient search parameters
+  showNutrientSearch: false,
 
-    toggleNutrientSearch() {
-      this.showNutrientSearch = !this.showNutrientSearch; // Toggle the visibility
-    },
-  
-    setCurrentDishId (dishId) {
-      if (!dishId || dishId === this.currentDishId) return;
-      this.currentDishId = dishId;
-      resolvePromise(getDishDetails(dishId), this.currentDishPromiseState);
-    },
-  
-    setNumberOfGuests (number) {
-      if (Number.isInteger(number) && number > 0) {
-        this.numberOfGuests = number;
-      } else {
-        throw new Error("number of guests not a positive integer");
+  // Method to set nutrient search parameters
+  setNutrientSearchParams(params) {
+    this.nutrientSearchParams = params;
+  },
+
+  // Add this method to add ingredients to searchIngredients
+  addIngredient(ingredient) {
+    // Prevent duplicate ingredients
+    if (!this.searchIngredients.includes(ingredient.trim())) {
+      this.searchIngredients = [...this.searchIngredients, ingredient.trim()];
+    }
+  },
+
+  // Method to set the current ingredient
+  setCurrentIngredient(value) {
+    this.currentIngredient = value;
+  },
+
+  // Unified Search Method Using Complex Search
+  doSearch() {
+    const params = {};
+
+    // Add ingredients to the search parameters if available
+    if (this.searchIngredients.length > 0) {
+      params.includeIngredients = this.searchIngredients.join(',');
+    }
+
+    // Add nutrient search parameters to the search parameters if available
+    Object.entries(this.nutrientSearchParams).forEach(([key, value]) => {
+      if (value) {
+        params[key] = value;
       }
-    },
-  
-    addToMenu (dishToAdd) {
-      this.dishes = [...this.dishes, dishToAdd];
-    },
-  
-    removeFromMenu(dishToRemove) {
-        function shouldWeKeepDishCB(dish) { return dish.id !== dishToRemove.id; }
-        this.dishes = this.dishes.filter(shouldWeKeepDishCB);
-    },
-  
-    setSearchQuery (query) {
-      this.searchParams.query = query;
-    },
-  
-    setSearchType (type) {
-      this.searchParams.type = type;
-    },
-  
-    setSearchIngredients (ingredients) {
-      if (Array.isArray(ingredients)) {
-        this.searchIngredients = ingredients;
+    });
+
+    // Use the complex search function with the combined parameters
+    resolvePromise(searchDishes(params), this.searchResultsPromiseState);
+  },
+
+  // Methods to toggle views
+  toggleIngredientSearch() {
+    this.showIngredientSearch = !this.showIngredientSearch;
+  },
+
+  toggleNutrientSearch() {
+    this.showNutrientSearch = !this.showNutrientSearch;
+  },
+
+  setCurrentDishId(dishId) {
+    if (!dishId || dishId === this.currentDishId) return;
+    this.currentDishId = dishId;
+    resolvePromise(getDishDetails(dishId), this.currentDishPromiseState);
+  },
+
+  setNumberOfGuests(number) {
+    if (Number.isInteger(number) && number > 0) {
+      this.numberOfGuests = number;
+    } else {
+      throw new Error("Number of guests must be a positive integer");
+    }
+  },
+
+  setSearchQuery(query) {
+    this.searchParams.query = query;
+  },
+
+  setSearchType(type) {
+    this.searchParams.type = type;
+  },
+
+  setSearchIngredients(ingredients) {
+    if (Array.isArray(ingredients)) {
+      this.searchIngredients = ingredients;
+    } else {
+      throw new Error("Ingredients must be an array");
+    }
+  },
+
+  // Method to clear the current ingredient input
+  clearCurrentIngredient() {
+    this.currentIngredient = "";
+  },
+
+  // Method to clear suggestions
+  clearSuggestions() {
+    this.suggestions = [];
+  },
+
+  // Method to fetch suggestions based on input
+  async fetchSuggestions(input) {
+    try {
+      if (input.trim().length > 2) {
+        const suggestions = await fetchIngredientSuggestions(input);
+        this.suggestions = Array.isArray(suggestions) ? suggestions : [];
       } else {
-        throw new Error("Ingredients must be an array");
+        this.suggestions = [];
       }
-    },
-  
-    doIngredientSearch () {
-      resolvePromise(
-        searchByIngredients(this.searchIngredients),
-        this.searchResultsPromiseState
-      );
-    },
-  
-    doSearch (params) {
-      resolvePromise(searchDishes(params), this.searchResultsPromiseState);
-    },
-  
-    setSuggestions (suggestions) {
-      if (Array.isArray(suggestions)) {
-        this.suggestions = suggestions;
-      } else {
-        throw new Error("Suggestions must be an array");
-      }
-    },
-  
-    clearCurrentIngredient () {
-      this.currentIngredient = "";
-    },
-  
-    // Method to clear suggestions
-    clearSuggestions () {
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
       this.suggestions = [];
-    },
-  
-    // Method to fetch suggestions based on input
-    async fetchSuggestions(input) {
-      try {
-        // Only proceed if input is more than 2 characters long
-        if (input.trim().length > 2) {
-          const suggestions = await fetchIngredientSuggestions(input);
-  
-          // Check if suggestions array has items
-          if (Array.isArray(suggestions) && suggestions.length > 0) {
-            this.suggestions = suggestions;
-          } else {
-            this.suggestions = []; // Clear suggestions if no results
-          }
-        } else {
-          this.suggestions = []; // Clear suggestions if input is too short
-        }
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
-        this.suggestions = []; // Clear suggestions on error
-      }
-    },
-  
-    // Method to remove an ingredient from searchIngredients
-    removeIngredient (ingredientToRemove) {
-      this.searchIngredients = this.searchIngredients.filter(
-        (ingredient) => ingredient !== ingredientToRemove
-      );
-    },
-  };
-  
-  export { model };
-  
+    }
+  },
+
+  // Method to remove an ingredient from searchIngredients
+  removeIngredient(ingredientToRemove) {
+    this.searchIngredients = this.searchIngredients.filter(
+      (ingredient) => ingredient !== ingredientToRemove
+    );
+  },
+};
+
+export { model };
