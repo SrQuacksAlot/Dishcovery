@@ -40,7 +40,10 @@ const model = {
   // Unified Search Method Using Complex Search
   doSearch() {
     const params = {};
-
+    if (this.searchParams.query) {
+      params.query = this.searchParams.query;
+    }
+    
     // Add ingredients to the search parameters if available
     if (this.searchIngredients.length > 0) {
       params.includeIngredients = this.searchIngredients.join(',');
