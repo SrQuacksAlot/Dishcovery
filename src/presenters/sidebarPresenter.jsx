@@ -24,7 +24,7 @@ const Sidebar = observer(function SidebarRender(props) {
     }
 
     function handleNavigateToNutritionalSearch() {
-        window.location.hash = "#/nutritional-search"; // Navigate to Nutritional Search page
+        model.toggleNutrientSearch();
     }
 
     return (

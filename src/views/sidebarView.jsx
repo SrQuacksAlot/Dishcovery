@@ -19,7 +19,7 @@ export function SidebarView(props) {
 
     function navigateToNutritionalSearchACB() {
         props.onNavigateToNutritionalSearch();
-        window.location.hash = "#/nutritional-search"; // Navigate to Nutritional Search page
+        window.location.hash = "#/search"; // Navigate to Nutritional Search page
     }
 
     // Callback function for rendering each dish row

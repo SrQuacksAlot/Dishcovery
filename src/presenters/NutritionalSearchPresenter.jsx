@@ -20,11 +20,17 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
     window.location.hash = '#/nutrient-search-results'; // Navigate to results
   };
 
+  const handleShowSidebar = () => {
+    model.toggleNutrientSearch();
+  }
+
   return (
     <NutritionalSearchView
       nutrientParams={model.nutrientSearchParams}
       onInputChange={handleInputChange}
       onSearch={handleSearch}
+      onShowSidebar={handleShowSidebar}
+
     />
   );
 });

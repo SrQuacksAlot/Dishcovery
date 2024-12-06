@@ -9,9 +9,18 @@ export function NutritionalSearchView(props) {
   function handleSearchClick() {
     props.onSearch();
   }
+  function handleShowSidebarClick() {
+    props.onShowSidebar(); // Function to show the sidebar
+  }
 
   return (
     <div className="nutritional-search-wrapper">
+      <button
+            
+            onClick={handleShowSidebarClick}
+          >
+            Show Sidebar
+          </button>
       <h3 className="nutritional-search-header">Nutritional Search</h3>
       <div className="nutritional-search-container">
         <div className="nutrient-input-group">

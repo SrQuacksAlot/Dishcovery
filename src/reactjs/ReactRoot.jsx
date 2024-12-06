@@ -20,8 +20,13 @@ const ReactRoot = observer(function ReactRoot(props) {
   return (
     <div className="flexParent">
       <div className="sidebar">
+      {console.log("Rendering sidebar: Ingredient Search?", props.model.showIngredientSearch)}
+        {console.log("Rendering sidebar: Nutrient Search?", props.model.showNutrientSearch)}
+        
         {props.model.showIngredientSearch ? (
           <IngredientSearchPresenter model={props.model} />
+        ) : props.model.showNutrientSearch ? (
+          <NutritionalSearchPresenter model={props.model} />
         ) : (
           <Sidebar model={props.model} />
         )}
@@ -51,14 +56,14 @@ function makeRouter(model) {
       path: "/details",
       element: <Details model={model} />,
     },
-    {
-      path: "/nutritional-search",
-      element: <NutritionalSearchPresenter model={model} />,
-    },
-    {
-      path: "/nutrient-search-results",
-      element: <NutrientSearchResultsPresenter model={model} />,
-    },
+    // {
+    //   path: "/nutritional-search",
+    //   element: <NutritionalSearchPresenter model={model} />,
+    // },
+    // {
+    //   path: "/nutrient-search-results",
+    //   element: <NutrientSearchResultsPresenter model={model} />,
+    // },
   ]);
 }
 

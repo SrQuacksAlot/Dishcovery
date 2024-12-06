@@ -20,7 +20,7 @@ import {
     showIngredientSearch: false, // New property to manage visibility
     nutrientSearchParams: {}, // Stores the nutrient search parameters
     nutrientSearchResultsPromiseState: {}, // Manages the promise state for nutrient search results
-
+    showNutrientSearch: false,
 
     // Method to set nutrient search parameters
     setNutrientSearchParams  (params) {
@@ -47,6 +47,14 @@ import {
   
     toggleIngredientSearch () {
       this.showIngredientSearch = !this.showIngredientSearch; // Toggle the visibility
+    },
+
+    toggleNutrientSearch() {
+      console.log("ingred",this.showIngredientSearch)
+      console.log("Before toggle:", this.showNutrientSearch); // Log the current state
+      this.showNutrientSearch = !this.showNutrientSearch; // Toggle the visibility
+      console.log("After toggle:", this.showNutrientSearch); // Log the new state
+      console.log("ingred",this.showIngredientSearch)
     },
   
     setCurrentDishId (dishId) {
