@@ -26,7 +26,7 @@ export function SearchFormView(props) {
     return (
         <div className="modern-search-form">
             <header className="form-header">
-                <h1 className="form-title">Dish Finder</h1>
+                <h1 className="form-title">Dishcovery</h1>
             </header>
 
             <div className="form-body">
