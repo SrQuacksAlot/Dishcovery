@@ -7,11 +7,6 @@ export function NutritionalSearchView(props) {
     props.onInputChange(name, value);
   }
 
-  function handleSliderChange(event) {
-    const { name, value } = event.target;
-    props.onInputChange(name, value);
-  }
-
   function handleSearchClick() {
     props.onSearch();
   }
@@ -154,12 +149,11 @@ export function NutritionalSearchView(props) {
   // Main return without search results
   return (
     <div className="nutritional-search-wrapper">
-      <button onClick={handleShowSidebarClick} className="nutritional-search-btn-sidebar-toggle">Show Sidebar</button>
+      <div className="sidebar-buttons">
+      <button className="ingredient-action-btn btn-sidebar" onClick={handleShowSidebarClick}>Show Sidebar</button>
+      </div>
       <h3 className="nutritional-search-header">Nutritional Search</h3>
       {renderNutrientInputGroups()}
-      <button className="nutritional-search-button" onClick={handleSearchClick}>
-        Search Dishes
-      </button>
     </div>
   );
 }

@@ -7,14 +7,6 @@ export function IngredientSearchView(props) {
         props.onClearSuggestions();
       }
     }
-  
-    function handleSearchDishesACB() {
-      props.onSearchDishes();
-    }
-  
-    function handleShowSidebarClick() {
-      props.onShowSidebar(); // Function to show the sidebar
-    }
 
   
     return (
@@ -47,19 +39,6 @@ export function IngredientSearchView(props) {
         </div>
   
         <div className="ingredient-actions">
-          <button
-            className="ingredient-action-btn"
-            onClick={handleSearchDishesACB}
-          >
-            Search Dishes
-          </button>
-  
-          <button
-            className="ingredient-action-btn btn-sidebar"
-            onClick={handleShowSidebarClick}
-          >
-            Show Sidebar
-          </button>
         </div>
   
         <div>

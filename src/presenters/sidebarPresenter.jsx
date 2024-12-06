@@ -19,12 +19,9 @@ const Sidebar = observer(function SidebarRender(props) {
         model.removeFromMenu(dish);
     }
 
-    function handleShowIngredientSearch() {
-        model.toggleIngredientSearch();
-    }
 
-    function handleNavigateToNutritionalSearch() {
-        model.toggleNutrientSearch();
+    function handleOnShowComplexSearch() {
+        model.toggleShowComplexSearch();
     }
 
     return (
@@ -34,8 +31,7 @@ const Sidebar = observer(function SidebarRender(props) {
             onNumberChange={handleNumberChange}
             onDishClick={handleDishClick}
             deleteDish={deleteDish}
-            onShowIngredientSearch={handleShowIngredientSearch}
-            onNavigateToNutritionalSearch={handleNavigateToNutritionalSearch}
+            onShowComplexSearch={handleOnShowComplexSearch}
         />
     );
 });

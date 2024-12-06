@@ -7,53 +7,68 @@ export function SearchFormView(props) {
         );
     }
 
-    // textbox input event handler 
-    // fire custom event for changing text with current value
     function handleTextChangeACB(event) {
         props.onTextInput(event.target.value);
     }
 
-    // select dropdown event handler 
-    // Fires a custom event for changing type to selected option
     function handleTypeChangeACB(event) {
         props.onTypeSelect(event.target.value);
     }
 
-    // search button event handler
-    // fire custom event for search action
     function handleSearchClickACB() {
         props.onSearchInitiate();
     }
 
-    // summary button event handler
     function handleSummaryClickACB() {
-        window.location.hash = "#/summary"; // Navigate to summary page
+        window.location.hash = "#/summary";
     }
 
-
     return (
-        <div>
-            {/* search box */}
-            <input 
-                value={props.text || ""}  // checks that the input displays text prop value or empty string if undefined
-                onChange={handleTextChangeACB}  // wait for native onChange and fires the custom event
-            />
-            
-            {/* dish types dropdown menu */}
-            <select 
-                value={props.type || ""}
-                onChange={handleTypeChangeACB}
-            >
-                <option value="">Choose:</option>
-                {props.dishTypeOptions.map(renderDishOptionCB)}
-            </select>
+        <div className="modern-search-form">
+            <header className="form-header">
+                <h1 className="form-title">Dish Finder</h1>
+            </header>
 
-            {/* search button */}
-            <button onClick={handleSearchClickACB}>Search!</button>
+            <div className="form-body">
+                <div className="form-group">
+                    <label htmlFor="dish-search" className="form-label">Search</label>
+                    <input 
+                        id="dish-search"
+                        className="form-input" 
+                        placeholder="Type a dish name..." 
+                        value={props.text || ""} 
+                        onChange={handleTextChangeACB}
+                    />
+                </div>
 
-            {/* summary button */}
-            <button onClick={handleSummaryClickACB}>Summary</button>
+                <div className="form-group">
+                    <label htmlFor="dish-type" className="form-label">Dish Type</label>
+                    <select 
+                        id="dish-type"
+                        className="form-select" 
+                        value={props.type || ""}
+                        onChange={handleTypeChangeACB}
+                    >
+                        <option value="">Select a type</option>
+                        {props.dishTypeOptions.map(renderDishOptionCB)}
+                    </select>
+                </div>
 
+                <div className="form-actions">
+                    <button 
+                        className="btn btn-primary" 
+                        onClick={handleSearchClickACB}
+                    >
+                        Search
+                    </button>
+                    <button 
+                        className="btn btn-secondary" 
+                        onClick={handleSummaryClickACB}
+                    >
+                        Summary
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

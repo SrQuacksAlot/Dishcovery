@@ -12,13 +12,9 @@ export function SidebarView(props) {
     // Event handler for decreasing the number
     function decreaseNumberACB() { props.onNumberChange(props.number - 1); }
 
-    function showIngredientSearchACB() {
-        props.onShowIngredientSearch();
-        window.location.hash = "#/search";
-    }
 
-    function navigateToNutritionalSearchACB() {
-        props.onNavigateToNutritionalSearch();
+    function showComplexSearch() {
+        props.onShowComplexSearch();
         window.location.hash = "#/search"; // Navigate to Nutritional Search page
     }
 
@@ -68,14 +64,12 @@ export function SidebarView(props) {
 
     return (
         <div className="sidebar">
+            <div className="sidebar-buttons">
+                <button onClick={showComplexSearch}>Show Complex Search</button>
+            </div>
             <button onClick={decreaseNumberACB} disabled={props.number <= 1}>-</button>
             <span>{props.number}</span>
             <button onClick={increaseNumberACB}>+</button>
-
-            <div className="sidebar-buttons">
-                <button onClick={showIngredientSearchACB}>Show Ingredient Search</button>
-                <button onClick={navigateToNutritionalSearchACB}>Nutrition Search</button>
-            </div>
 
             <table>
                 <tbody>

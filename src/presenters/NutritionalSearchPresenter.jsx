@@ -18,7 +18,7 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
   };
 
   const handleShowSidebar = () => {
-    model.toggleNutrientSearch();
+    model.toggleShowComplexSearch();
   };
 
   return (

@@ -1,34 +1,29 @@
 export function SearchResultsView(props) {
-    // handle event for the dish click
-    return (<div>{props.searchResults.map(renderDishResultCB)}</div>);
+    return (
+        <div className="search-results-container">
+            {props.searchResults.map(renderDishResultCB)}
+        </div>
+    );
 
     function renderDishResultCB(dish) {
         function handleDishClickACB() {
-            props.onDishSelect(dish); // Fire custom event with dish object
-            window.location.hash = `#/details`; // Set hash to navigate to details
+            props.onDishSelect(dish);
+            window.location.hash = `#/details`;
         }
 
         return (
-            <span
-                key={dish.id}
-                className="search-result"
-                onClick={handleDishClickACB} // Custom event
-                style={{ display: "inline-block",
-                         textAlign: "center", 
-                         width: "150px", 
-                         verticalAlign: "top", 
-                         margin: "10px",
-                        }}
+            <div 
+                key={dish.id} 
+                className="search-result-card" 
+                onClick={handleDishClickACB}
             >
-                {/* Dish image */}
-                <img
-                    src={dish.image}
-                    alt={dish.title}
-                    height="100" // Fixed height
+                <img 
+                    className="dish-image" 
+                    src={dish.image} 
+                    alt={dish.title} 
                 />
-                {/* Dish title */}
-                <div>{dish.title}</div>
-            </span>
+                <div className="dish-title" title={dish.title}>{dish.title}</div>
+            </div>
         );
     }
 }

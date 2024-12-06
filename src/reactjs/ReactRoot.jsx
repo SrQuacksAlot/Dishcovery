@@ -19,10 +19,11 @@ const ReactRoot = observer(function ReactRoot(props) {
   return (
     <div className="flexParent">
       <div className="sidebar">
-        {props.model.showIngredientSearch ? (
-          <IngredientSearchPresenter model={props.model} />
-        ) : props.model.showNutrientSearch ? (
-          <NutritionalSearchPresenter model={props.model} />
+        {props.model.showComplexSearch ? (
+          <div>
+            <NutritionalSearchPresenter model={props.model} />
+            <IngredientSearchPresenter model={props.model} />
+          </div>
         ) : (
           <Sidebar model={props.model} />
         )}
@@ -32,7 +33,7 @@ const ReactRoot = observer(function ReactRoot(props) {
       </div>
     </div>
   );
-});
+  });
 
 function makeRouter(model) {
   return createHashRouter([

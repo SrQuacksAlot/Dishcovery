@@ -17,7 +17,7 @@ const model = {
   currentIngredient: "", // Track current ingredient being typed
   showIngredientSearch: false,
   nutrientSearchParams: {}, // Stores nutrient search parameters
-  showNutrientSearch: false,
+  showComplexSearch: false,
 
   // Method to set nutrient search parameters
   setNutrientSearchParams(params) {
@@ -62,8 +62,8 @@ const model = {
     this.showIngredientSearch = !this.showIngredientSearch;
   },
 
-  toggleNutrientSearch() {
-    this.showNutrientSearch = !this.showNutrientSearch;
+  toggleShowComplexSearch() {
+    this.showComplexSearch = !this.showComplexSearch;
   },
 
   setCurrentDishId(dishId) {
