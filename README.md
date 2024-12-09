@@ -1,62 +1,60 @@
-# npm-tutorial
-tutorial version 5
 
-1. install node, recent version (e.g. 17)
+Short description of your project
 
-2. after checkout execute
-```
-npm install
-```
-3. to start your development server
-```
-npm run dev
-```
+This project is a web application designed to enable users to discover dishes through the ingredients they have on hand, their nutritional requirements if specified and textual search queries. The platform utilizes the Spoonacular API for the resources and queries. The goal is to create a user friendly and engaging experience by providing the user with advanced filtering options to help facilitate discovering dishes according to their specifications and by assisting in appreciating the nutritional value of any dish of choice by presenting them as dish cards where various relevant metrics will be displayed and emphasized through color coding and possibly other ways if we have time.
 
-In case of problems with npm, see (6) Docker below
+What you have done
+Implemented Unified Search: Combined textual, ingredient-based, and nutrient-specific searches into a single cohesive query using the Spoonacular API's complex search endpoint.Created views and presenters for the ingredient and nutrient searches.
 
-4. Point your browser to HTML addresses corresponding to different steps of the tutorial, such as:
+Dynamic Nutrient Input: Integrated the ability to input and adjust over 30 nutrient parameters using sliders and input fields.
 
-http://localhost:8080/tw1.1.html
+Ingredient Suggestions: Added a feature to suggest ingredients dynamically as users type, using the autocomplete API call.
 
-http://localhost:8080/tw1.1-react.html
+Dual-Handle Sliders: Added intuitive dual-handle sliders for setting minimum and maximum values for nutrient parameters.
 
-http://localhost:8080/tw1.2.html
+Modular File Structure: Organized the project into a clear and maintainable file structure with reusable components.
 
-http://localhost:8080/tw1.2-react.html
+What you still plan to do
+Fully implement dishcards
+flesh out logic for scoring and rating that will be used to present each dishcard.
+User Authentication: Add login and registration functionality to allow users to save dishcards in their own "inventory".
 
-http://localhost:8080/tw1.2.1.html
 
-The tutorial will point you to other such URLs. Each file under `tw/tw*.js` has a HTML counterpart
-
-5. Unit tests should be run after each tutorial step. We recommend to load unit tests in an Incognito browser window.
-http://localhost:8080/test.html
-
-6. Make sure that your function names and parameter names follow the **obligatory** [lab coding conventions](https://docs.google.com/presentation/d/1CtxiAG9mJ6kslSl6psBBlVDafFD4b2Rh2G7ft1GQ08o/edit#slide=id.g17644a78da5_0_174)
-
-## Installation problems?
-File [an issue](https://gits-15.sys.kth.se/iprog/issues).
-In case you have problems with node, npm, webpack, you can use Docker to make a clean little "machine"
-
-* Docker: https://docs.docker.com/get-docker/
-* Docker-Compose: https://docs.docker.com/compose/install/
-
-When you want to run the development server:
-```
-docker-compose up
-```
-(see the file `docker-compose.yml`) 
-
-Note that running this command for the first time might take some time, since we have to download the image and install all the dependencies.
-
-## Test result tracking 
-Your test results are saved in a secured KTH database. We use this for three main purposes:
-
-1) to identify students who struggle in the early stages of the course
-2) to identify concepts that many students struggle with.
-3) to conduct learning analytics research. For such purposes, all data is stored anonymoyusly.
-
-To configure, locate the file "telemetry.config.json" in the root directory
-- Track my test results: "full"  (default). In this case we will be albe to contact you if we notice that you get stuck.
-- Track my test results without username: "anonymous". This still helps us see if many students get stuck at the same lab task.
-- Don't track my test results: "none"  
-
+Your project file structure (short description/purpose of each file)
+|— /src
+    |— /config (currently empty)
+    |— /firebase
+        |— firebaseConfig.js    # Firebase configuration settings.
+        |— firebaseModel.js     # Firebase-related logic and state management.
+        |— teacherfirebase.js   # Firebase mock helper function.
+        
+    |— /models
+        |— DinnerModel.js       # Application state model logic.
+    |— /presenters
+        |— detailsPresenter.jsx       # Manages the detailed view of a selected recipe.
+        |— DishCardPresenter.jsx      # Presenter for dish card interaction logic.
+        |— IngredientSearchPresenter.jsx # Presenter handling ingredient search-specific functionality.
+        |— NutritionalSearchPresenter.jsx # Presenter handling the nutritional search logic.
+        |— searchPresenter.jsx        # Presenter for main search functionality.
+        |— sidebarPresenter.jsx       # Handles the sidebar navigation logic.
+        |— summaryPresenter.jsx       # Presenter for displaying summary information.
+    |— /reactjs
+        |— index.jsx             # Main entry point for the React application.
+        |— ReactRoot.jsx         # Root component for rendering the application.
+    |— /styles
+        |— dualSlider.css        # Styles for the dual-handle sliders used currently in nutritional search.
+        |— style.css             # General and global styles for the application.
+    |— /utils
+        |— apiConfig.js          # API configuration and keys.
+        |— dishSource.js         # Utility functions for API calls.
+        |— resolvePromise.js     # Helper function for managing promise states.
+        |— teacherFetch.js       
+    |— /views
+        |— detailsView.jsx            # Displays recipe details.
+        |— DishCardView.jsx           # View component for individual dish cards.
+        |— IngredientSearchView.jsx   # UI for searching recipes by ingredients.
+        |— NutritionalSearchView.jsx  # UI for searching recipes by nutritional criteria.
+        |— searchFormView.jsx         # Displays search input fields.
+        |— searchResultsView.jsx      # Displays results of a recipe search.
+        |— sidebarView.jsx            # Sidebar UI for navigation.
+        |— summaryView.jsx            # Displays a summary of selected recipes.
