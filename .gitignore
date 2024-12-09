@@ -4,3 +4,5 @@
 /tw
 telemetry.config.json
  
+/dist
+*.cache

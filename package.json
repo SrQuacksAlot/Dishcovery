@@ -24,6 +24,7 @@
         "vite-plugin-virtual-html": "1.0.2"
     },
     "dependencies": {
+        "@vitejs/plugin-react": "^4.3.4",
         "firebase": "^9.17.1",
         "mobx": "^6.8.0",
         "mobx-react-lite": "^3.4.2",

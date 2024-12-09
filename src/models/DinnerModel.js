@@ -36,14 +36,28 @@ const model = {
   setCurrentIngredient(value) {
     this.currentIngredient = value;
   },
+  // Add dish to the menu
+  addToMenu(dishToAdd) {
+    this.dishes = [...this.dishes, dishToAdd];
+  },
 
+  // Remove dish from the menu
+  removeFromMenu(dishToRemove) {
+    function shouldWeKeepDishCB(dish) {
+      return dish.id !== dishToRemove.id;
+    }
+    this.dishes = this.dishes.filter(shouldWeKeepDishCB);
+  },
   // Unified Search Method Using Complex Search
   doSearch() {
     const params = {};
     if (this.searchParams.query) {
       params.query = this.searchParams.query;
     }
-    
+    // Add dish type
+    if (this.searchParams.type) {
+      params.type = this.searchParams.type;
+    }
     // Add ingredients to the search parameters if available
     if (this.searchIngredients.length > 0) {
       params.includeIngredients = this.searchIngredients.join(',');
