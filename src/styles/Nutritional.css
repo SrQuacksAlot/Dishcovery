@@ -1,20 +1,45 @@
+/* Section Headers */
+
+.nutritional-search-header {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+/* Container for entire range slider section */
+.nutritional-search-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 8px auto;
+    background: #f5f5f5;
+    padding: 4px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 /* Container for entire range slider section */
 .nutritional-search-range-container {
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: 20px auto;
+    margin: 8px auto;
     background: #f5f5f5;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 4px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.nutritional-search-range-label {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 8px auto;
 }
 
 /* Controls the slider component container */
 .nutritional-search-sliders-control {
     position: relative;
-    min-height: 50px;
-    margin: 10px 0;
+    min-height: 10px;
+    margin: 5px 0;
 }
 
 /* Container for min/max value inputs */
@@ -22,9 +47,8 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
-    color: #635a5a;
-    margin-top: 10px;
+    font-size: 12px;
+    color: #09a9e9;
 }
 
 /* Styles for the input type range (slider) */
@@ -34,7 +58,7 @@ input[type="range"].nutritional-search-slider {
     height: 4px;
     width: 100%;
     position: absolute;
-    background-color: #C6C6C6;
+    background-color: #c6c6c6;
     pointer-events: none;
     outline: none;
 }
@@ -99,36 +123,30 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
     color: #333;
 }
 
-/* Style for buttons */
-.nutritional-search-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #387bbe;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
 
-.nutritional-search-button:hover {
-    background-color: #2865a1;
-}
 
-.nutritional-search-btn-sidebar-toggle {
-    margin-bottom: 15px;
-}
 
-/* Section Headers */
-.nutritional-search-section-header {
-    color: #387bbe;
-    font-weight: 700;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-.nutritional-search-header {
-    text-align: center;
-    color: #333;
+/* Styling for the nutrient groups */
+.nutrient-group {
     margin-bottom: 20px;
-    font-weight: 600;
-  }
+}
+  
+.nutrient-group summary {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.nutrient-group summary .icon {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.nutrient-group[open] summary .icon {
+    transform: rotate(180deg);
+}
+
+.nutrient-group .nutrient-sliders-container {
+    margin-top: 10px;
+}

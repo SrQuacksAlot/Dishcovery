@@ -13,10 +13,11 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
     model.setNutrientSearchParams(newParams);
   };
 
-  const handleSearch = () => {
-    model.doNutrientSearch(); // Now uses searchResultsPromiseState
-  };
 
+  const handleToggleGroup = (groupName) => {
+    model.toggleNutrientGroup(groupName);
+  };
+  
   const handleShowSidebar = () => {
     model.toggleShowComplexSearch();
   };
@@ -25,8 +26,9 @@ const NutritionalSearchPresenter = observer(function NutritionalSearchPresenter(
     <NutritionalSearchView
       nutrientParams={model.nutrientSearchParams}
       onInputChange={handleInputChange}
-      onSearch={handleSearch}
       onShowSidebar={handleShowSidebar}
+      collapsedGroups={model.collapsedGroups}
+      onToggleGroup={handleToggleGroup}
     />
   );
 });

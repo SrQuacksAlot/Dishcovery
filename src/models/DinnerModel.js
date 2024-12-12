@@ -15,7 +15,6 @@ const model = {
   currentDishPromiseState: {},
   suggestions: [],
   currentIngredient: "", // Track current ingredient being typed
-  showIngredientSearch: false,
   nutrientSearchParams: {}, // Stores nutrient search parameters
   showComplexSearch: false,
 
@@ -74,10 +73,6 @@ const model = {
     resolvePromise(searchDishes(params), this.searchResultsPromiseState);
   },
 
-  // Methods to toggle views
-  toggleIngredientSearch() {
-    this.showIngredientSearch = !this.showIngredientSearch;
-  },
 
   toggleShowComplexSearch() {
     this.showComplexSearch = !this.showComplexSearch;
