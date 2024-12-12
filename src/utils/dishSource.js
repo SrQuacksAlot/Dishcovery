@@ -31,7 +31,7 @@ function apiRequest(endpoint, params = {}, transformResponse) {
 export function searchIngredients(query, number = 10) {
     return apiRequest('/food/ingredients/search', { query, number });
   }
-  
+
 export function getIngredientSubstitutes(ingredientName) {
 return apiRequest('/food/ingredients/substitutes', { ingredientName });
 }

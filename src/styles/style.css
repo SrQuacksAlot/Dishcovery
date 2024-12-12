@@ -12,9 +12,13 @@
 }
 
 /* Sidebar Styling */
+/* Sidebar Styling */
 .sidebar {
-  flex: 0 0 320px; /* Fixed constant width for the sidebar */
-  height: 100%; 
+  position: fixed; /* Keeps the sidebar fixed in place */
+  top: 0; /* Positions the sidebar at the top of the viewport */
+  left: 0; /* Positions the sidebar at the left of the viewport */
+  width: 320px; /* Fixed constant width for the sidebar */
+  height: 99.5vh; /* Sets the height to the full viewport height */
   border-style: solid;
   background-color: #f0f0f0; /* Light background for better contrast */
   overflow-y: auto; /* Enables vertical scrolling */
@@ -22,6 +26,7 @@
 
 /* Main Content Styling */
 .mainContent {
+  margin-left: 320px; /* Adds a margin to the left of the main content */
   flex: 1; /* Let mainContent use remaining space */
 }
 
@@ -49,127 +54,6 @@
       flex: 1; /* Adjust dynamically */
       width: 100%; /* Full width in portrait mode */
   }
-}
-/* Ingredient Search Specific Styles */
-.ingredient-search-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.ingredient-search-header {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.ingredient-search-container {
-  position: relative;
-  margin-bottom: 15px;
-  width: 100%;
-}
-
-.ingredient-search-input {
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  box-sizing: border-box; /* Ensure padding is included in width */
-}
-
-.ingredient-search-input:focus {
-  outline: none;
-  border-color: #4a90e2;
-}
-
-.ingredient-suggestions {
-  position: absolute;
-  top: 100%; /* Positioned immediately after the input */
-  left: 0;
-  width: 100%; /* Exactly same width as the input */
-  max-height: 200px;
-  overflow-y: auto;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-top: none; /* Remove top border to sit flush with input */
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  margin-top: 0; /* Ensure no extra spacing */
-  box-sizing: border-box; /* Ensure border is included in width */
-}
-
-.ingredient-suggestion-item {
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.ingredient-suggestion-item:hover {
-  background-color: #f0f0f0;
-}
-
-.ingredient-actions {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.ingredient-action-btn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  background-color: #4a90e2;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.ingredient-action-btn:hover {
-  background-color: #357abd;
-}
-
-.ingredient-action-btn.btn-secondary {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.ingredient-action-btn.btn-secondary:hover {
-  background-color: #d0d0d0;
-}
-
-.ingredient-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.ingredient-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f4f4f4;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.ingredient-list-item-remove {
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.ingredient-list-item-remove:hover {
-  background-color: #ff5252;
 }
 
 .sidebar-buttons{
@@ -279,74 +163,5 @@
   }
 }
 
-/* Search Results Container SearchResultView */
-.search-results-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-/* Individual Dish Card */
-.search-result-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  text-align: center;
-  width: 300px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-result-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Dish Image */
-.dish-image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  object-fit: cover;
-}
-
-/* Dish Title */
-.dish-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box; /* For Webkit browsers */
-  -webkit-line-clamp: 2; /* Limits to 2 lines for Webkit */
-  -webkit-box-orient: vertical; /* Required for Webkit */
-  line-clamp: 2; /* Standard property */
-  box-orient: vertical; /* For compatibility */
-  white-space: normal;
-  line-height: 1.2;
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-  .search-results-container {
-      gap: 12px;
-      padding: 16px;
-  }
-
-  .search-result-card {
-      width: 150px;
-      padding: 12px;
-  }
-
-  .dish-title {
-      font-size: 14px;
-  }
-}
 

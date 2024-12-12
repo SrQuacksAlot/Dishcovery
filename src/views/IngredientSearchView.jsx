@@ -1,3 +1,4 @@
+import '/src/styles/Ingredient.css';
 export function IngredientSearchView(props) {
     function handleIngredientChangeACB(event) {
       const value = event.target.value;
