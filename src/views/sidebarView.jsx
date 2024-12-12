@@ -57,13 +57,15 @@ export function SidebarView(props) {
                     </a>
                 </td>
                 <td>{dishType(dish)}</td>
-                <td className="right-align">{(dish.pricePerServing * props.number).toFixed(2)}</td>
+                {/* <td className="right-align">{(props.number).toFixed(2)}</td> */}
+                {/* <td className="right-align">{(dish.pricePerServing * props.number).toFixed(2)}</td> */}
             </tr>
         );
     }
 
     return (
         <div className="sidebar">
+            <h2 className="sidebar-header">Menu</h2> {/* Title added here */}
             <div className="sidebar-buttons">
                 <button onClick={showComplexSearch}>Show Complex Search</button>
             </div>
@@ -74,14 +76,15 @@ export function SidebarView(props) {
             <table>
                 <tbody>
                     {sortedDishes.map(dishTableRowCB)}
-                    <tr>
-                        <td></td> {/* Empty space */}
+                    {/* <tr>
+                        <td></td> 
                         <td>Total:</td>
-                        <td></td> {/* Empty space */}
+                        <td></td> 
                         <td className="right-align">{totalPrice}</td>
-                    </tr>
+                    </tr> */}
                 </tbody>
             </table>
+            
         </div>
     );
 }

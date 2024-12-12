@@ -15,7 +15,7 @@ export function IngredientSearchView(props) {
     return (
       <div className="ingredient-search-wrapper">
         <div className="sidebar-buttons">
-        <button className="ingredient-action-btn btn-sidebar" onClick={handleShowSidebarClick}>Show Sidebar</button>
+        <button className="ingredient-action-btn btn-sidebar" onClick={handleShowSidebarClick}>Show Menu</button>
         </div>
         <h3 className="ingredient-search-header">Ingredient Search</h3>
   

@@ -24,6 +24,10 @@
   overflow-y: auto; /* Enables vertical scrolling */
 }
 
+.sidebar-header{
+  text-align: center;
+}
+
 /* Main Content Styling */
 .mainContent {
   margin-left: 320px; /* Adds a margin to the left of the main content */

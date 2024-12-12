@@ -53,7 +53,10 @@ export function searchDishes(searchParams) {
 }
 
 export function getMenuDetails(ids_array) {
-  const params = { ids: ids_array.join(',') };
+  const params = {
+    ids: ids_array.join(','),
+    includeNutrition: true,
+  };
   return apiRequest('/recipes/informationBulk', params);
 }
 

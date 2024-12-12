@@ -17,6 +17,8 @@ const model = {
   currentIngredient: "", // Track current ingredient being typed
   nutrientSearchParams: {}, // Stores nutrient search parameters
   showComplexSearch: false,
+  isDishDetailsModalOpen: false,
+
 
   // Method to set nutrient search parameters
   setNutrientSearchParams(params) {
@@ -78,7 +80,16 @@ const model = {
     this.showComplexSearch = !this.showComplexSearch;
   },
 
+
+  removeCurrentDishID(){
+    model.currentDishId = null;
+    model.currentDishPromiseState = {};
+    this.isDishDetailsModalOpen = !this.isDishDetailsModalOpen;
+    console.log(this.isDishDetailsModalOpen);
+  },
+
   setCurrentDishId(dishId) {
+    this.isDishDetailsModalOpen = !this.isDishDetailsModalOpen;
     if (!dishId || dishId === this.currentDishId) return;
     this.currentDishId = dishId;
     resolvePromise(getDishDetails(dishId), this.currentDishPromiseState);

@@ -13,7 +13,7 @@ export function SearchResultsView(props) {
     function renderDishResultCB(dish) {
         function handleDishClickACB() {
             props.onDishSelect(dish);
-            window.location.hash = `#/details`;
+            // window.location.hash = `#/details`;
         }
 
         return (

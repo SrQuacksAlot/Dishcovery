@@ -31,6 +31,14 @@ const ReactRoot = observer(function ReactRoot(props) {
       <div className="mainContent">
         <RouterProvider router={makeRouter(props.model)} />
       </div>
+      {/* Render details modal if it's open */}
+      {props.model.isDishDetailsModalOpen && (
+        <Details
+          model={props.model} 
+          isModal={true} 
+          onCancel={() => props.model.onCancel()} 
+        />
+      )}
     </div>
   );
   });
@@ -49,10 +57,10 @@ function makeRouter(model) {
       path: "/summary",
       element: <Summary model={model} />,
     },
-    {
-      path: "/details",
-      element: <Details model={model} />,
-    },
+    // {
+    //   path: "/details",
+    //   element: <Details model={model} />,
+    // },
 
   ]);
 }
