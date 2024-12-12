@@ -126,3 +126,9 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+.nutritional-search-header {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }

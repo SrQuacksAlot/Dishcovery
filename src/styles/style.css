@@ -17,6 +17,7 @@
   height: 100%; 
   border-style: solid;
   background-color: #f0f0f0; /* Light background for better contrast */
+  overflow-y: auto; /* Enables vertical scrolling */
 }
 
 /* Main Content Styling */
@@ -348,3 +349,4 @@
       font-size: 14px;
   }
 }
+

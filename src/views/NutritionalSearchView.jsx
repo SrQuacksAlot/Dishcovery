@@ -1,4 +1,4 @@
-import '/src/styles/dualSlider.css';
+import '/src/styles/Nutritional.css';
 
 export function NutritionalSearchView(props) {
   // Callback for when input or slider value changes
@@ -7,13 +7,6 @@ export function NutritionalSearchView(props) {
     props.onInputChange(name, value);
   }
 
-  function handleSearchClick() {
-    props.onSearch();
-  }
-
-  function handleShowSidebarClick() {
-    props.onShowSidebar();
-  }
   // Function to render dual slider for each nutrient
   function renderDualSlider(labelText, minName, maxName, minValue, maxValue, min = 0, max = 100) {
     function handleSliderChange(event) {
@@ -149,9 +142,6 @@ export function NutritionalSearchView(props) {
   // Main return without search results
   return (
     <div className="nutritional-search-wrapper">
-      <div className="sidebar-buttons">
-      <button className="ingredient-action-btn btn-sidebar" onClick={handleShowSidebarClick}>Show Sidebar</button>
-      </div>
       <h3 className="nutritional-search-header">Nutritional Search</h3>
       {renderNutrientInputGroups()}
     </div>

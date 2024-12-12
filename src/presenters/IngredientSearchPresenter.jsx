@@ -32,7 +32,7 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
     };
 
     const handleShowSidebar = () => {
-        model.toggleIngredientSearch();
+        model.toggleShowComplexSearch();
     };
 
     return (

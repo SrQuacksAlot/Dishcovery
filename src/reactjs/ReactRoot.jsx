@@ -21,8 +21,8 @@ const ReactRoot = observer(function ReactRoot(props) {
       <div className="sidebar">
         {props.model.showComplexSearch ? (
           <div>
-            <NutritionalSearchPresenter model={props.model} />
             <IngredientSearchPresenter model={props.model} />
+            <NutritionalSearchPresenter model={props.model} />
           </div>
         ) : (
           <Sidebar model={props.model} />
