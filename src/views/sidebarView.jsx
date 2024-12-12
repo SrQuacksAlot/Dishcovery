@@ -26,7 +26,7 @@ export function SidebarView(props) {
         function dishLinkClickedACB(evt) {
             evt.preventDefault(); // Prevent default browser behavior
             props.onDishClick(dish); // Fire custom event with the dish object
-            window.location.hash = `#/details`; // Navigate to /details
+            // window.location.hash = `#/details`; // Navigate to /details
         }
 
         return (
