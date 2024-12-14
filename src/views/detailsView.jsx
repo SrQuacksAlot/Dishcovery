@@ -18,12 +18,6 @@ export function DetailsView(props) {
     // Navigation handler for "Add to Menu" button
     function handleAddToMenuClick() {
         onAddToMenu();
-
-        if (isModal && onCancel) {
-            onCancel(); // Close modal if applicable
-        } else {
-            window.location.hash = "#/search"; // Navigate back to search
-        }
     }
 
     // Callback for determining macronutrient-based color class
@@ -55,7 +49,11 @@ export function DetailsView(props) {
                 <div className={"dish-card-rarity"}> {Math.round(dishData.spoonacularScore) || "N/A"} </div>
                 {/* Dish Image */}
                 <img className="dish-card-image" src={dishData.image} alt={dishData.title} />
-    
+                {/* Actions */}
+                <div className="dish-card-actions">
+                        <button onClick={handleAddToMenuClick} disabled={isDishInMenu}>Add to Menu</button>
+                        <button onClick={onCancel}>Return</button>
+                    </div>
                 {/* Card Content */}
                 <div className="dish-card-content">
 
@@ -96,11 +94,7 @@ export function DetailsView(props) {
                         </ul>
                     </div>
     
-                    {/* Actions */}
-                    <div className="dish-card-actions">
-                        <button onClick={handleAddToMenuClick} disabled={isDishInMenu}>Add to Menu</button>
-                        <button onClick={onCancel}>Return</button>
-                    </div>
+                    
                 </div>
             </div>
     );

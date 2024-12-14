@@ -37,11 +37,11 @@ const ReactRoot = observer(function ReactRoot(props) {
       {/* Render modal outside of flexParent */}
       {props.model.isDishDetailsModalOpen && (
         <>
-          <div className="dimmed-background" />
+          <div className="dimmed-background" 
+          onClick={() => props.model.removeCurrentDishID()} 
+          />
           <Details
             model={props.model}
-            isModal={true}
-            onCancel={() => props.model.onCancel()}
           />
         </>
       )}

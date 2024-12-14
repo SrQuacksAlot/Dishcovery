@@ -81,7 +81,7 @@ const model = {
   },
 
 
-  removeCurrentDishID(){ // back to search button
+  removeCurrentDishID(){ // back to search button/ on cancel click
     model.currentDishId = null;
     model.currentDishPromiseState = {};
     this.isDishDetailsModalOpen = false;
