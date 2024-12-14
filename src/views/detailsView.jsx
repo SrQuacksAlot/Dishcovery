@@ -14,7 +14,16 @@ export function DetailsView(props) {
             </tr>
         );
     }
-
+    // Callback for rendering ingredients in a table
+    function renderNutrientRowCB(nutrient) {
+        return (
+            <tr key={nutrient.id}>
+                <td>{nutrient.name}</td>
+                <td className="right-align">{nutrient.amount}</td>
+                <td>{nutrient.unit}</td>
+            </tr>
+        );
+    }
     // Navigation handler for "Add to Menu" button
     function handleAddToMenuClick() {
         onAddToMenu();
@@ -57,42 +66,24 @@ export function DetailsView(props) {
                 {/* Card Content */}
                 <div className="dish-card-content">
 
-    
-                    {/* Description */}
-                    <div className="expandable-section" onClick={() => props.onSectionClick("description")}> 
-                        <h4>Description</h4>
-                        <div className="dish-card-description">
-                            <p>{dishData.summary || "No description available."}</p>
-                        </div>
-                    </div>
-                    
-                    {/* instructions */}
-                    <div className="expandable-section" onClick={() => props.onSectionClick("instructions")}> 
-                        <h4>Instructions</h4>
-                        <div className="dish-card-instructions">
-                            <p>{dishData.instructions || "No instructions available."}</p>
-                        </div>
+
+                {/* instructions */}
+                    <h4>Instructions</h4>
+                    <div className="dish-card-instructions">
+                        <p>{dishData.instructions || "No instructions available."}</p>
                     </div>
 
-                    {/* Ingredients */}
-                    <div className="expandable-section" onClick={() => props.onSectionClick("ingredients")}> 
-                        <h4>Ingredients</h4>
-                        <ul className="dish-card-ingredients">
-                            {dishData.extendedIngredients.map(renderIngredientRowCB)}
-                        </ul>
-                    </div>
-    
+                {/* Ingredients */}
+                    <h4>Ingredients</h4>
+                    <ul className="dish-card-ingredients">
+                        {dishData.extendedIngredients.map(renderIngredientRowCB)}
+                    </ul>
+
                     {/* Nutrition */}
-                    <div className="expandable-section" onClick={() => props.onSectionClick("nutrition")}> 
-                        <h4>Nutrition</h4>
-                        <ul className="dish-card-nutrition">
-                            {dishData.nutrition.nutrients.map((nutrient) => (
-                                <li key={nutrient.name}>
-                                    {nutrient.name}: {nutrient.amount} {nutrient.unit}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <h4>Nutrition</h4>
+                    <ul className="dish-card-nutrition">
+                        {dishData.nutrition.nutrients.map(renderNutrientRowCB)}
+                    </ul>
     
                     
                 </div>
