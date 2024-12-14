@@ -34,7 +34,7 @@ const Search = observer(function SearchPresenter(props) {
     }
 
     function handleSearchInitiateACB() {
-        model.doSearch(model.searchParams);
+        model.doSearch();
     }
 
     return (

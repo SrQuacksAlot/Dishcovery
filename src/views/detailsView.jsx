@@ -1,7 +1,10 @@
 import '/src/styles/Details.css';
+import "/src/styles/DishCard.css";
 
 export function DetailsView(props) {
-    // Existing callback for rendering ingredients in a table
+    const { dishData, isDishInMenu, onAddToMenu, onCancel, isModal } = props;
+
+    // Callback for rendering ingredients in a table
     function renderIngredientRowCB(ingredient) {
         return (
             <tr key={ingredient.id}>
@@ -12,123 +15,93 @@ export function DetailsView(props) {
         );
     }
 
-    // Navigation handler for "Cancel" button, navigates to /search
-    function handleCancelClick() {
-        props.onCancel();
-    } 
-
     // Navigation handler for "Add to Menu" button
     function handleAddToMenuClick() {
-        props.onAddToMenu(); // Call the existing handler
-        
-        // If in modal mode, close the modal
-        if (props.isDishDetailsModalOpen && props.onCancel) {
-            props.onCancel();
+        onAddToMenu();
+
+        if (isModal && onCancel) {
+            onCancel(); // Close modal if applicable
         } else {
-            window.location.hash = "#/search"; // Navigate to /search
+            window.location.hash = "#/search"; // Navigate back to search
         }
     }
 
-    // Determine the container classes based on modal prop
-    const containerClasses = `details-view ${props.isModal ? 'modal' : ''}`;
-    const contentClasses = `details-content ${props.isModal ? 'modal-content' : ''}`;
+    // Callback for determining macronutrient-based color class
+    function getMacronutrientColorCB(dish) {
+        const { protein, fat, carbs } = dish.nutrition.nutrients.reduce(
+            (acc, nutrient) => {
+                if (nutrient.name === "Protein") acc.protein = nutrient.amount;
+                if (nutrient.name === "Fat") acc.fat = nutrient.amount;
+                if (nutrient.name === "Carbohydrates") acc.carbs = nutrient.amount;
+                return acc;
+            },
+            { protein: 0, fat: 0, carbs: 0 }
+        );
+
+        if (protein > fat && protein > carbs) return "protein-dominant";
+        if (fat > protein && fat > carbs) return "fat-dominant";
+        if (carbs > protein && carbs > fat) return "carb-dominant";
+        return "default-nutrient";
+    }
+
+    const nutrientColorClass = getMacronutrientColorCB(dishData);
 
     return (
-        <div className={containerClasses}>
-            <div className={contentClasses}>
-                
-                {/* Close button for modal mode */}
-                {props.isModal && (
-                    <button 
-                        className="close-modal-btn" 
-                        onClick={props.onCancel}
-                    >
-                        ×
-                    </button>
-                )}
+            <div className={`dish-card ${nutrientColorClass}`} >
 
-                {/* Dish Figure */}
-                <figure className="dish-figure">
-                    <img
-                        src={props.dishData.image}
-                        alt={props.dishData.title}
-                    />
-                    <figcaption>{props.dishData.title}</figcaption>
-                </figure>
+                {/* Title */}
+                <h2 className="dish-card-title"> {dishData.title}</h2>
+                {/* Score Badge with  Color */}
+                <div className={"dish-card-rarity"}> {Math.round(dishData.spoonacularScore) || "N/A"} </div>
+                {/* Dish Image */}
+                <img className="dish-card-image" src={dishData.image} alt={dishData.title} />
+    
+                {/* Card Content */}
+                <div className="dish-card-content">
 
-                <div className="details-body">
-                    {/* Footer Buttons */}
-                    <div className="details-footer">
-                        <button 
-                            onClick={handleAddToMenuClick} 
-                            disabled={props.isDishInMenu}
-                        >
-                            Add to menu!
-                        </button>
-                        
-                        {/* Only show "Back to Search" button if not in modal mode */}
-                        {!props.isModal && (
-                            <button onClick={handleCancelClick}>
-                                Back To Search
-                            </button>
-                        )}
+    
+                    {/* Description */}
+                    <div className="expandable-section" onClick={() => props.onSectionClick("description")}> 
+                        <h4>Description</h4>
+                        <div className="dish-card-description">
+                            <p>{dishData.summary || "No description available."}</p>
+                        </div>
+                    </div>
+                    
+                    {/* instructions */}
+                    <div className="expandable-section" onClick={() => props.onSectionClick("instructions")}> 
+                        <h4>Instructions</h4>
+                        <div className="dish-card-instructions">
+                            <p>{dishData.instructions || "No instructions available."}</p>
+                        </div>
                     </div>
 
-                    {/* Servings Section */}
-                    <section className="servings-section">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>Servings:</td>
-                                <td>{props.dishData.servings}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    {/* Ingredients Section */}
-                    <section className="ingredients-section">
-                        <table>
-                            <caption>Ingredients</caption>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Unit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {props.dishData.extendedIngredients.map(renderIngredientRowCB)}
-                            </tbody>
-                        </table>
-                    </section>
-
-                    {/* Instructions Section */}
-                    <section className="instructions-section">
-                        <table>
-                            <caption>Instructions</caption>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        {props.dishData.instructions || "No instructions available."}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    {/* Recipe Link Section */}
-                    <section className="recipe-link">
-                        <a 
-                            href={props.dishData.sourceUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                        >
-                            More information
-                        </a>
-                    </section>
+                    {/* Ingredients */}
+                    <div className="expandable-section" onClick={() => props.onSectionClick("ingredients")}> 
+                        <h4>Ingredients</h4>
+                        <ul className="dish-card-ingredients">
+                            {dishData.extendedIngredients.map(renderIngredientRowCB)}
+                        </ul>
+                    </div>
+    
+                    {/* Nutrition */}
+                    <div className="expandable-section" onClick={() => props.onSectionClick("nutrition")}> 
+                        <h4>Nutrition</h4>
+                        <ul className="dish-card-nutrition">
+                            {dishData.nutrition.nutrients.map((nutrient) => (
+                                <li key={nutrient.name}>
+                                    {nutrient.name}: {nutrient.amount} {nutrient.unit}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+    
+                    {/* Actions */}
+                    <div className="dish-card-actions">
+                        <button onClick={handleAddToMenuClick} disabled={isDishInMenu}>Add to Menu</button>
+                        <button onClick={onCancel}>Return</button>
+                    </div>
                 </div>
             </div>
-        </div>
     );
 }
