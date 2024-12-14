@@ -17,31 +17,37 @@ const ReactRoot = observer(function ReactRoot(props) {
   }
 
   return (
-    <div className="flexParent">
-      <div className="sidebar">
-        {props.model.showComplexSearch ? (
-          <div>
-            <IngredientSearchPresenter model={props.model} />
-            <NutritionalSearchPresenter model={props.model} />
-          </div>
-        ) : (
-          <Sidebar model={props.model} />
-        )}
+    <>
+      <div className="flexParent">
+        <div className="sidebar">
+          {props.model.showComplexSearch ? (
+            <div>
+              <IngredientSearchPresenter model={props.model} />
+              <NutritionalSearchPresenter model={props.model} />
+            </div>
+          ) : (
+            <Sidebar model={props.model} />
+          )}
+        </div>
+        <div className="mainContent">
+          <RouterProvider router={makeRouter(props.model)} />
+        </div>
       </div>
-      <div className="mainContent">
-        <RouterProvider router={makeRouter(props.model)} />
-      </div>
-      {/* Render details modal if it's open */}
+  
+      {/* Render modal outside of flexParent */}
       {props.model.isDishDetailsModalOpen && (
-        <Details
-          model={props.model} 
-          isModal={true} 
-          onCancel={() => props.model.onCancel()} 
-        />
+        <>
+          <div className="dimmed-background" />
+          <Details
+            model={props.model}
+            isModal={true}
+            onCancel={() => props.model.onCancel()}
+          />
+        </>
       )}
-    </div>
+    </>
   );
-  });
+});
 
 function makeRouter(model) {
   return createHashRouter([

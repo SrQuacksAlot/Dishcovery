@@ -81,14 +81,13 @@ const model = {
   },
 
 
-  removeCurrentDishID(){
+  removeCurrentDishID(){ // back to search button
     model.currentDishId = null;
     model.currentDishPromiseState = {};
-    this.isDishDetailsModalOpen = !this.isDishDetailsModalOpen;
-    console.log(this.isDishDetailsModalOpen);
+    this.isDishDetailsModalOpen = false;
   },
 
-  setCurrentDishId(dishId) {
+  setCurrentDishId(dishId) { //on select dish
     this.isDishDetailsModalOpen = !this.isDishDetailsModalOpen;
     if (!dishId || dishId === this.currentDishId) return;
     this.currentDishId = dishId;

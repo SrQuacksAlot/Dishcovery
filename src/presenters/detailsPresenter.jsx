@@ -20,7 +20,6 @@ const Details = observer(function DetailsPresenter(props) {
     // Named callback for canceling the current selection
     function handleCancelACB() {
         model.removeCurrentDishID();
-        console.log("presenter");
     }
 
     return (

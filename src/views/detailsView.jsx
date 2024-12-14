@@ -1,3 +1,5 @@
+import '/src/styles/Details.css';
+
 export function DetailsView(props) {
     // Existing callback for rendering ingredients in a table
     function renderIngredientRowCB(ingredient) {
@@ -34,6 +36,7 @@ export function DetailsView(props) {
     return (
         <div className={containerClasses}>
             <div className={contentClasses}>
+                
                 {/* Close button for modal mode */}
                 {props.isModal && (
                     <button 
