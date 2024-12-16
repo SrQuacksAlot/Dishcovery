@@ -16,14 +16,21 @@ const Details = observer(function DetailsPresenter({ model }) {
         model.removeCurrentDishID();
     }
 
+    function handleFlip() {
+        model.flipped = !model.flipped; // Toggle the flipped state
+    }
+    
     return (
         <DetailsView
             dishData={model.currentDishPromiseState.data}
             isDishInMenu={isDishInMenu}
             onAddToMenu={handleAddToMenuACB}
             onCancel={handleCancelACB}
+            isFlipped={model.flipped} // Pass flipped state
+            onFlip={handleFlip} // Pass the toggle function
         />
     );
+    
 });
 
 export { Details };

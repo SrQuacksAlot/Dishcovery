@@ -10,39 +10,48 @@
     overflow: auto;
     background: linear-gradient(135deg, #f0f0f0, #e6e6e6); /* Subtle gradient */
     border: 8px solid #444; /* Dark frame */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Trading card shadow */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
     transition: transform 0.3s, box-shadow 0.3s;
     z-index: 1001;
 }
 
 .dish-card-title {
-    font-size: 16px;
+    position: relative;
+    font-size: 18px;
     font-weight: bold;
     text-align: left;
-    margin: 10px ;
+    margin: 2% 2%;
     color: #222;
     text-transform: uppercase;
+    max-width: 89%;
+    display: inline-block; 
+    vertical-align: top;
 }
 
-.dish-card-rarity {
-    position: fixed;
-    top: 8px;
-    right: 8px;
+.dish-card-score {
+    position: absolute; 
+    top: 1%;
+    right: 1%;
+    max-width: 10%;
     background: radial-gradient(circle, #ffd700, #e6ac00); 
-    padding: 4px 8px;
+    padding: 8px 8px;
     border-radius: 12px;
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
+    display: inline-block; 
+    vertical-align: top; 
 }
+
 
 .dish-card-image {
     padding: 10px 16px;
     width: 90%;
     height: 35%;
     object-fit: contain;
+    align-items: center;
     border: 4px solid #444; /* Separate image from content */
 }
 
@@ -104,4 +113,71 @@
 
 .carb-dominant {
     border-color: #000dff7e; /* blue */
+}
+
+
+
+.dish-card-container {
+    perspective: 1000px; 
+    width: 480px;
+    height: 600px;
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1002; 
+}
+
+/* Inner container that flips */
+.dish-card-inner {
+    width: 100%;
+    height: 100%; /* Match container height for consistent layout */
+    transition: transform 1s cubic-bezier(0.44, -0.48, 0.5, 1.35);
+    transform-style: preserve-3d;
+    position: absolute; /* Position relative to the container */
+    top: 0;
+    left: 0;
+}
+
+/* Add flipped state */
+.dish-card-inner.flipped {
+    transform: rotateY(180deg) ;
+}
+
+/* Front and Back Sides */
+.dish-card-front,
+.dish-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide the back when front is visible */
+    border-radius: 16px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+/* Front-specific styles */
+.dish-card-front {
+    background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
+    z-index: 2; /* Ensure front side stacks above the back by default */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Add depth to the card */
+
+}
+
+/* Back-specific styles */
+.dish-card-back {
+    background: #444;
+    color: #fff;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Add depth to the back side */
+    z-index: 1; /* Ensure it stacks below the front by default */
 }

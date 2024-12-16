@@ -19,6 +19,7 @@ const model = {
   showComplexSearch: false,
   isDishDetailsModalOpen: false,
   userIsSignedIn: false,
+  flipped: false, // Default state
 
 
   // Method to set nutrient search parameters
