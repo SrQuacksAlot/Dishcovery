@@ -1,6 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { SearchFormView } from "/src/views/searchFormView.jsx";
 import { SearchResultsView } from "/src/views/searchResultsView.jsx";
+import { signInWithGoogle } from "/src/firebase/firebaseModel";
+import { signOutOfApp } from "/src/firebase/firebaseModel.js";
 
 const Search = observer(function SearchPresenter(props) {
     const { model } = props;
@@ -36,6 +38,23 @@ const Search = observer(function SearchPresenter(props) {
     function handleSearchInitiateACB() {
         model.doSearch();
     }
+    
+
+    function SignIn(){
+        signInWithGoogle().then(() => {
+            // Handle successful sign-in
+          }).catch((error) => {
+            // Handle errors
+          });
+    }
+
+    function SignOut(){
+        signOutOfApp().then(() => {
+            // Handle successful sign-out
+          }).catch((error) => {
+            // Handle errors
+          });
+    }
 
     return (
         <div>
@@ -43,9 +62,13 @@ const Search = observer(function SearchPresenter(props) {
                 dishTypeOptions={["starter", "main course", "dessert"]}
                 text={model.searchParams.query || ""}
                 type={model.searchParams.type || ""}
+                
+                isUserSignedInText = {model.userIsSigned}
                 onTextInput={handleTextInputACB}
                 onTypeSelect={handleTypeSelectACB}
                 onSearchInitiate={handleSearchInitiateACB}
+                onSignIn={SignIn}
+                onSignOut={SignOut}
             />
             {renderSearchResultsCB()}
         </div>

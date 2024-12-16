@@ -37,7 +37,7 @@ const ReactRoot = observer(function ReactRoot(props) {
       {/* Render modal outside of flexParent */}
       {props.model.isDishDetailsModalOpen && (
         <>
-          <div className="dimmed-background" 
+          <div className="dimmed-background"
           onClick={() => props.model.removeCurrentDishID()} 
           />
           <Details
@@ -63,10 +63,6 @@ function makeRouter(model) {
       path: "/summary",
       element: <Summary model={model} />,
     },
-    // {
-    //   path: "/details",
-    //   element: <Details model={model} />,
-    // },
 
   ]);
 }

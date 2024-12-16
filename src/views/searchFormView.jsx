@@ -23,8 +23,31 @@ export function SearchFormView(props) {
         window.location.hash = "#/summary";
     }
 
+    function onSignInClick() {
+        props.onSignIn();
+    }
+
+    function onSignOutClick() {
+        props.onSignOut();
+    }
+
     return (
         <div className="modern-search-form">
+            <div className="auth-buttons">
+                <button  onClick={onSignInClick}>
+                    Sign Up / Sign In
+                </button>
+                <button onClick={onSignOutClick}>
+                    Sign Out
+                </button>
+                {props.isUserSignedInText ? (
+                    <p>User is signed in</p>
+                ) : (
+                    <p>No user is signed in</p>
+                )}
+                
+            </div>
+            
             <header className="form-header">
                 <h1 className="form-title">Dishcovery</h1>
             </header>

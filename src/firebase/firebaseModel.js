@@ -1,32 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get, set} from "/src/firebase/teacherFirebase.js";
-
-
-
-/* you will find 2 imports in firebaseModel, add the configuration and instantiate the app and database: */
-import {firebaseConfig} from "/src/firebase/firebaseConfig.js";
+import { getDatabase, ref, get, set } from "/src/firebase/teacherFirebase.js";
+import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { firebaseConfig } from "/src/firebase/firebaseConfig.js";
 import { getMenuDetails } from "/src/utils/dishSource";
-const app= initializeApp(firebaseConfig)
-const db= getDatabase(app)
 
-/*  PATH is the “root” Firebase path. NN is your TW2_TW3 group number */
-const PATH="dinnerModel69";
-// Add relevant imports here 
-// TODO
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
 
-// Initialise firebase app, database, ref
-// TODO
-//set(ref(db, PATH+"/test"), "dummy");
-// set(ref(db, PATH), modelToPersistence({
-//     numberOfGuests:5, 
-//     currentDishId:13, 
-//     dishes:[{id:13, title:"dummy1"}, 
-//             {id:42, title:"dummy2"}]
-//    }))
+const PATH = "dinnerModel69";
+const provider = new GoogleAuthProvider();
 
 function modelToPersistence(model){
-    
-    // Named callback for map
     function extractDishIdCB(dish) {
         return dish.id;
     }
@@ -36,25 +21,25 @@ function modelToPersistence(model){
     return {
         guests: model.numberOfGuests,      
         dishIDs: sortedDishIds,            
-        selectedDishID: model.currentDishId
+        selectedDishID: model.currentDishId,
+        userId: auth.currentUser ? auth.currentUser.uid : null
     };
-
 }
 
 function persistenceToModel(firebaseData, model){
     if (!firebaseData) { 
-        
         model.dishes = [];
         model.numberOfGuests = 2;
         model.setCurrentDishId(null); 
+        model.user = null;
         return Promise.resolve(model);
     }   
-    else if (!firebaseData.dishIDs) {
-        
+    
+    model.user = firebaseData.userId;
+    
+    if (!firebaseData.dishIDs) {
         model.dishes = [];
-    } 
-    else {
-        
+    } else {
         function updateDishes(dishes) { 
             model.dishes = dishes; 
             model.numberOfGuests = firebaseData.guests || 2;
@@ -65,49 +50,79 @@ function persistenceToModel(firebaseData, model){
       
     model.numberOfGuests = firebaseData.guests || 2;
     model.setCurrentDishId(firebaseData.selectedDishID); 
-
     
     return Promise.resolve(model); 
-      
 }
     
 function saveToFirebase(model){
-    // TODO
-    if (model.ready) {
-        set(ref(db, PATH), modelToPersistence(model));
-      }
+    if (model.ready && auth.currentUser) {
+        set(ref(db, `${PATH}/${auth.currentUser.uid}`), modelToPersistence(model));
+    }
 }
-function readFromFirebase(model){
 
-    // TODO
+function readFromFirebase(model){
+    model.ready = false;
     
-    model.ready=false;
-    return get(ref(db, PATH))
-                .then(function convertACB(snapshot){
-                        // return promise
-                        return persistenceToModel(snapshot.val(), model);
-                })
-                .then(function setModelReadyACB(){
-                            model.ready=true;
-                })           
-    
+    // Check if user is authenticated before reading
+    if (!auth.currentUser) {
+        model.ready = true;
+        return Promise.resolve(model);
+    }
+
+    return get(ref(db, `${PATH}/${auth.currentUser.uid}`))
+        .then(function convertACB(snapshot){
+            return persistenceToModel(snapshot.val(), model);
+        })
+        .then(function setModelReadyACB(){
+            model.ready = true;
+        });
 }
+
 function connectToFirebase(model, watchFunction){
-        // TODO
-    readFromFirebase(model); 
+    // Set up authentication state listener
+    onAuthStateChanged(auth, function authStateChangedACB(user) {
+        model.user = user;
+        
+        if (user) {
+            // User is signed in, read from Firebase
+            readFromFirebase(model);
+            model.userIsSigned = true;
+        } else {
+            // User is signed out, reset model
+            model.dishes = [];
+            model.numberOfGuests = 2;
+            model.setCurrentDishId(null);
+            model.ready = true;
+            model.userIsSigned = false;
+        }
+    });
 
     function checkModelChangesACB() {
-        return [ model.numberOfGuests, model.currentDishId, model.dishes];
-
+        return [ model.numberOfGuests, model.currentDishId, model.dishes ];
     }
 
     function handleModelChangesACB() { 
         saveToFirebase(model); 
     }
 
-    watchFunction(checkModelChangesACB, handleModelChangesACB); 
-    
-
+    watchFunction(checkModelChangesACB, handleModelChangesACB);
 }
-// Remember to uncomment the following line:
-export { connectToFirebase, modelToPersistence, persistenceToModel, saveToFirebase, readFromFirebase }
+
+function signInWithGoogle() {
+    return signInWithPopup(auth, provider);
+}
+
+function signOutOfApp() {
+    return signOut(auth);
+}
+
+export { 
+    connectToFirebase, 
+    modelToPersistence, 
+    persistenceToModel, 
+    saveToFirebase, 
+    readFromFirebase,
+    signInWithGoogle,
+    signOutOfApp,
+    auth  // Expose auth object if needed
+};

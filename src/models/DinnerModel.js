@@ -18,6 +18,7 @@ const model = {
   nutrientSearchParams: {}, // Stores nutrient search parameters
   showComplexSearch: false,
   isDishDetailsModalOpen: false,
+  userIsSignedIn: false,
 
 
   // Method to set nutrient search parameters
@@ -82,8 +83,8 @@ const model = {
 
 
   removeCurrentDishID(){ // back to search button/ on cancel click
-    model.currentDishId = null;
-    model.currentDishPromiseState = {};
+    this.currentDishId = null;
+    this.currentDishPromiseState = {};
     this.isDishDetailsModalOpen = false;
   },
 
