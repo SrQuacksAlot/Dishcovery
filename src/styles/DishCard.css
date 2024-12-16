@@ -1,13 +1,11 @@
-
-
 .dish-card {
     position: fixed; /* Overlay modal */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 20%; /* Compact trading card size */
-    height: 65%; /* Standard trading card aspect ratio */
-    margin: 20px auto; /* Center the card */
+    width: 480px; /* Compact trading card size */
+    height: 600px; /* Standard trading card aspect ratio */
+    margin: auto auto; /* Center the card */
     border-radius: 16px; /* Rounded corners */
     overflow: auto;
     background: linear-gradient(135deg, #f0f0f0, #e6e6e6); /* Subtle gradient */
@@ -15,7 +13,6 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Trading card shadow */
     transition: transform 0.3s, box-shadow 0.3s;
     z-index: 1001;
-    justify-content: center;
 }
 
 .dish-card-title {
@@ -28,10 +25,10 @@
 }
 
 .dish-card-rarity {
-    position: absolute;
+    position: fixed;
     top: 8px;
     right: 8px;
-    background: radial-gradient(circle, #ffd700, #e6ac00); /* Gold for Rare */
+    background: radial-gradient(circle, #ffd700, #e6ac00); 
     padding: 4px 8px;
     border-radius: 12px;
     color: #fff;
@@ -45,15 +42,13 @@
     padding: 10px 16px;
     width: 90%;
     height: 35%;
-    object-fit: fill;
+    object-fit: contain;
     border: 4px solid #444; /* Separate image from content */
 }
 
 
-
-
-
 .dish-card-content {
+    position: fixed; /* Overlay modal */
     padding: 10px 16px;
     display: flex;
     flex-direction: column;
@@ -110,4 +105,3 @@
 .carb-dominant {
     border-color: #000dff7e; /* blue */
 }
-

@@ -12,7 +12,6 @@
 }
 
 /* Sidebar Styling */
-/* Sidebar Styling */
 .sidebar {
   position: fixed; /* Keeps the sidebar fixed in place */
   top: 0; /* Positions the sidebar at the top of the viewport */
@@ -27,7 +26,9 @@
 .sidebar-header{
   text-align: center;
 }
-
+.sidebar-buttons{
+  text-align: right;
+}
 /* Main Content Styling */
 .mainContent {
   margin-left: 320px; /* Adds a margin to the left of the main content */
@@ -60,9 +61,7 @@
   }
 }
 
-.sidebar-buttons{
-  text-align: right;
-}
+
 
 /* Modern Search Form Styles  SearchFormView*/
 .modern-search-form {

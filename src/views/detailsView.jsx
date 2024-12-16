@@ -2,7 +2,7 @@ import '/src/styles/Details.css';
 import "/src/styles/DishCard.css";
 
 export function DetailsView(props) {
-    const { dishData, isDishInMenu, onAddToMenu, onCancel, isModal } = props;
+    const { dishData, isDishInMenu, onAddToMenu, onCancel} = props;
 
     // Callback for rendering ingredients in a table
     function renderIngredientRowCB(ingredient) {
@@ -24,10 +24,7 @@ export function DetailsView(props) {
             </tr>
         );
     }
-    // Navigation handler for "Add to Menu" button
-    function handleAddToMenuClick() {
-        onAddToMenu();
-    }
+
 
     // Callback for determining macronutrient-based color class
     function getMacronutrientColorCB(dish) {
@@ -54,26 +51,30 @@ export function DetailsView(props) {
 
                 {/* Title */}
                 <h2 className="dish-card-title"> {dishData.title}</h2>
+
                 {/* Score Badge with  Color */}
                 <div className={"dish-card-rarity"}> {Math.round(dishData.spoonacularScore) || "N/A"} </div>
+
                 {/* Dish Image */}
                 <img className="dish-card-image" src={dishData.image} alt={dishData.title} />
+
                 {/* Actions */}
                 <div className="dish-card-actions">
-                        <button onClick={handleAddToMenuClick} disabled={isDishInMenu}>Add to Menu</button>
+                        <button onClick={onAddToMenu} disabled={isDishInMenu}>Add to Menu</button>
                         <button onClick={onCancel}>Return</button>
+                        <button onClick={() => window.open(props.dishData.sourceUrl, "_blank", "noopener,noreferrer")}>More Information</button>
                     </div>
+
                 {/* Card Content */}
                 <div className="dish-card-content">
 
-
-                {/* instructions */}
+                    {/* instructions */}
                     <h4>Instructions</h4>
                     <div className="dish-card-instructions">
                         <p>{dishData.instructions || "No instructions available."}</p>
                     </div>
 
-                {/* Ingredients */}
+                    {/* Ingredients */}
                     <h4>Ingredients</h4>
                     <ul className="dish-card-ingredients">
                         {dishData.extendedIngredients.map(renderIngredientRowCB)}
