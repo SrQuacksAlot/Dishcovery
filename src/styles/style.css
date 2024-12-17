@@ -35,7 +35,6 @@
   flex: 1; /* Let mainContent use remaining space */
 }
 
-
 /* Parent Flex Container */
 .flexParent {
   display: flex;
