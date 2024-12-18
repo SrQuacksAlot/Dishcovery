@@ -1,28 +1,75 @@
-.dish-card {
-    position: fixed; /* Overlay modal */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 480px; /* Compact trading card size */
-    height: 600px; /* Standard trading card aspect ratio */
-    margin: auto auto; /* Center the card */
-    border-radius: 16px; /* Rounded corners */
-    overflow: auto;
-    background: linear-gradient(135deg, #f0f0f0, #e6e6e6); /* Subtle gradient */
-    border: 8px solid #444; /* Dark frame */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
-    z-index: 1001;
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
 }
+
+
+.card-background {
+    position: fixed; /* Provides a fixed viewport context */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Horizontally center the card */
+    align-items: center; /* Vertically center the card */
+    z-index: 0;
+}
+
+.dish-card-front,
+.dish-card-back {
+    perspective: 2000px; /* Provides the 3D effect */
+    width: 480px;
+    height: 600px;
+    position: absolute; /* Absolute positioning relative to the background */
+    background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
+    border-radius: 16px; /* Match container corners */
+    border: 8px solid #444; /* Dark frame */
+    padding: 16px; /* Prevent edge clinging */
+    backface-visibility: hidden; /* Hide the back when the front is visible */
+    transition: transform 1s cubic-bezier(0.44, -0.48, 0.5, 1.35); /* Smooth transition */
+    display: flex;
+    flex-direction: column;
+    overflow: auto; /* Allow scrolling for large content */
+    -ms-overflow-style: none; /* IE and Edge hide scrollbar */
+    scrollbar-width: none; /* Firefox hides scrollbar */
+    box-sizing: border-box; /* Include padding and borders in dimensions */
+    justify-content: flex-start; /* Align content to the top */
+}
+
+.dish-card-front {
+    transform: rotateY(0deg); /* Default position for the front */
+    z-index: 2;
+}
+
+.dish-card-back {
+    transform: rotateY(180deg); /* Position the back side for the flip */
+    z-index: 1;
+}
+
+/* Flip the front and back sides based on the flipped class */
+.dish-card-front.flipped {
+    transform: rotateY(-180deg); /* Front side flips out of view */
+    z-index: 1;
+}
+
+.dish-card-back.flipped {
+    transform: rotateY(0deg); /* Back side flips into view */
+    z-index: 2;
+}
+
 
 .dish-card-title {
     position: relative;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     text-align: left;
     margin: 2% 2%;
     color: #222;
     text-transform: uppercase;
-    max-width: 89%;
+    max-width: 80%;
     display: inline-block; 
     vertical-align: top;
 }
@@ -44,40 +91,16 @@
     vertical-align: top; 
 }
 
-
 .dish-card-image {
-    padding: 10px 16px;
-    width: 90%;
+    width: 85%;
     height: 35%;
     object-fit: contain;
-    align-items: center;
     border: 4px solid #444; /* Separate image from content */
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto; /* Center horizontally */
 }
 
-
-.dish-card-content {
-    position: fixed; /* Overlay modal */
-    padding: 10px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-between;
-}
-
-.dish-card-description, .dish-card-nutrition, .dish-card-ingredients, .dish-card-instructions {
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-    font-size: 12px;
-    color: #333;
-    overflow-y: auto;
-    max-height: 80px; /* Constrain height */
-    background: rgba(255, 255, 255, 0.8); /* Light background for readability */
-    border-radius: 8px;
-    padding: 8px;
-}
 
 .dish-card-actions {
     display: flex;
@@ -97,20 +120,76 @@
     transition: background-color 0.3s;
 }
 
-.card-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 0; 
-}
-
-
 .dish-card-actions button:hover {
     background-color: #222;
 }
+
+
+
+.dish-card-content {
+    z-index: 1; /* Just to ensure it's below the back-actions */
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+}
+.dish-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* space between heading and content */
+}
+
+.dish-section h4 {
+    margin: 0; /* Remove default margin if needed */
+    font-size: 14px;
+    color: #222; 
+    text-transform: uppercase;
+}
+
+.dish-card-ingredients, .dish-card-nutrition, .dish-card-instructions {
+    display: block;
+    width: 100%; 
+    margin: 0;
+    padding: 8px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    color: #333;
+    max-height: 80px;
+    overflow: auto; /* Allow scrolling for large content */
+    -ms-overflow-style: none; /* IE and Edge hide scrollbar */
+    scrollbar-width: none; /* Firefox hides scrollbar */
+    box-sizing: border-box;
+}
+.dish-card-ingredients,
+.dish-card-nutrition {
+    display: table;
+    border-collapse: collapse;
+}
+
+.dish-card-ingredients tr,
+.dish-card-nutrition tr {
+    display: table-row;
+    border-bottom: 1px solid #ddd;
+}
+
+.dish-card-ingredients td,
+.dish-card-nutrition td {
+    display: table-cell;
+    padding: 4px 8px;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+
 
 /* Macronutrient Colors for Frame */
 .protein-dominant {
@@ -125,69 +204,3 @@
     border-color: #000dff7e; /* blue */
 }
 
-
-
-.dish-card-container {
-    perspective: 1000px; 
-    width: 480px;
-    height: 600px;
-    position: fixed; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1002; 
-}
-
-/* Inner container that flips */
-.dish-card-inner {
-    width: 100%;
-    height: 100%; /* Match container height for consistent layout */
-    transition: transform 1s cubic-bezier(0.44, -0.48, 0.5, 1.35);
-    transform-style: preserve-3d;
-    position: absolute; /* Position relative to the container */
-    top: 0;
-    left: 0;
-}
-
-/* Add flipped state */
-.dish-card-inner.flipped {
-    transform: rotateY(180deg) ;
-}
-
-/* Front and Back Sides */
-.dish-card-front,
-.dish-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden; /* Hide the back when front is visible */
-    border-radius: 16px;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-}
-
-/* Front-specific styles */
-.dish-card-front {
-    background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
-    z-index: 2; /* Ensure front side stacks above the back by default */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Add depth to the card */
-
-}
-
-/* Back-specific styles */
-.dish-card-back {
-    background: #444;
-    color: #fff;
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Add depth to the back side */
-    z-index: 1; /* Ensure it stacks below the front by default */
-}

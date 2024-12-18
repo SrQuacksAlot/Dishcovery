@@ -1,14 +1,7 @@
 import "/src/styles/DishCard.css";
 
 export function DetailsView(props) {
-    const {
-        dishData,
-        isDishInMenu,
-        onAddToMenu,
-        onCancel,
-        isFlipped,
-        onFlip, 
-    } = props;
+
 
     // Callback for rendering ingredients in a table
     function renderIngredientRowCB(ingredient) {
@@ -51,68 +44,68 @@ export function DetailsView(props) {
         return "default-nutrient";
     }
 
-    const nutrientColorClass = getMacronutrientColorCB(dishData);
+    const nutrientColorClass = getMacronutrientColorCB(props.dishData);
 
     return (
-    <div className='card-background' onClick={onCancel}> 
-        <div className="dish-card-container" onClick={(e) => e.stopPropagation()}>
-            <div className={`dish-card-inner ${isFlipped ? 'flipped' : ''}`}>
-                {/* Front Side */}
-                <div className="dish-card-front">
-                    <div className={`dish-card ${nutrientColorClass}`} >
+        <div className='card-background' onClick={props.onCancel}> 
+            {/* Front Side */}
+            <div className={`dish-card-front ${nutrientColorClass} ${props.isFlipped ? 'flipped' : ''} `} onClick={(e) => e.stopPropagation()}>
+                {/* Title and Score */}
+                <h2 className="dish-card-title">{props.dishData.title}</h2>
+                <div className="dish-card-score">{Math.round(props.dishData.spoonacularScore) || "N/A"}</div>
 
-                        {/* Title */}
-                        <h2 className="dish-card-title"> {dishData.title}</h2>
+                {/* Dish Image */}
+                <img
+                    className={`dish-card-image ${nutrientColorClass}`}
+                    src={props.dishData.image}
+                    alt={props.dishData.title}
+                />
 
-                        {/* Score Badge with  Color */}
-                        <div className={"dish-card-score"}> {Math.round(dishData.spoonacularScore) || "N/A"} </div>
+                {/* Actions */}
+                <div className="dish-card-actions">
+                    <button onClick={props.onAddToMenu} disabled={props.isDishInMenu}>Add to Menu</button>
+                    <button onClick={props.onCancel}>Return</button>
+                    <button onClick={() => window.open(props.dishData.sourceUrl, "_blank", "noopener,noreferrer")}>
+                        More Information
+                    </button>
+                    <button onClick={props.onFlip}>Flip</button>
+                </div>
 
-                        {/* Dish Image */}
-                        <img className={`dish-card-image ${nutrientColorClass}`} src={dishData.image} alt={dishData.title} />
-
-                        {/* Actions */}
-                        <div className="dish-card-actions">
-                                <button onClick={onAddToMenu} disabled={isDishInMenu}>Add to Menu</button>
-                                <button onClick={onCancel}>Return</button>
-                                <button onClick={() => window.open(props.dishData.sourceUrl, "_blank", "noopener,noreferrer")}>More Information</button>
-                                <button onClick={onFlip}>Flip</button>
-                            </div>
-
-                        {/* Card Content */}
-                        <div className="dish-card-content">
-
-                            {/* instructions */}
-                            <h4>Instructions</h4>
-                            <div className="dish-card-instructions">
-                                <p>{dishData.instructions || "No instructions available."}</p>
-                            </div>
-
-                            {/* Ingredients */}
-                            <h4>Ingredients</h4>
-                            <ul className="dish-card-ingredients">
-                                {dishData.extendedIngredients.map(renderIngredientRowCB)}
-                            </ul>
-
-                            {/* Nutrition */}
-                            <h4>Nutrition</h4>
-                            <ul className="dish-card-nutrition">
-                                {dishData.nutrition.nutrients.map(renderNutrientRowCB)}
-                            </ul>
-            
-                            
-                        </div>
+                {/* Card Content */}
+                <div className="dish-card-content">
+                    <div className="dish-section">
+                        <h4>Nutrition</h4>
+                        <ul className="dish-card-nutrition">
+                            {props.dishData.nutrition.nutrients.map(renderNutrientRowCB)}
+                        </ul>
                     </div>
                 </div>
-                {/* Back Side */}
-                <div className="dish-card-back">
-                    <h4>Additional Information</h4>
-                    <p>{dishData.summary || "No additional information available."}</p>
-                    <div className="dish-card-back-actions">
-                        <button onClick={onFlip}>Flip</button>
+            </div>
+            
+            {/* Back Side */}
+            <div className={`dish-card-back ${nutrientColorClass} ${props.isFlipped ? 'flipped' : ''} `} onClick={(e) => e.stopPropagation()}>
+                <div className="dish-card-actions">
+                    <button onClick={props.onFlip}>Flip</button>
+                </div>    
+
+                <div className="dish-card-content">
+                    <div className="dish-section">
+                        <h4>Instructions</h4>
+                        <div className="dish-card-instructions">
+                            <p>{props.dishData.instructions || "No instructions available."}</p>
+                        </div>
+                    </div>
+
+                    <div className="dish-section">
+                        <h4>Ingredients</h4>
+                        <ul className="dish-card-ingredients">
+                            {props.dishData.extendedIngredients.map(renderIngredientRowCB)}
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        </div>    
     );
+    
+    
 }
