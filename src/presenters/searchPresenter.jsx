@@ -41,15 +41,18 @@ const Search = observer(function SearchPresenter(props) {
     
 
     function SignIn(){
-        signInWithGoogle().then(() => {
+        if(!model.userIsSignedIn){
+        signInWithGoogle(model).then(() => {
             // Handle successful sign-in
           }).catch((error) => {
             // Handle errors
           });
+        }
     }
 
     function SignOut(){
         signOutOfApp().then(() => {
+            // model.removeUsername();
             // Handle successful sign-out
           }).catch((error) => {
             // Handle errors
@@ -62,8 +65,8 @@ const Search = observer(function SearchPresenter(props) {
                 dishTypeOptions={["starter", "main course", "dessert"]}
                 text={model.searchParams.query || ""}
                 type={model.searchParams.type || ""}
-                
-                isUserSignedInText = {model.userIsSigned}
+                username={model.username}
+                isUserSignedInText = {model.userIsSignedIn}
                 onTextInput={handleTextInputACB}
                 onTypeSelect={handleTypeSelectACB}
                 onSearchInitiate={handleSearchInitiateACB}

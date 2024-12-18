@@ -41,7 +41,7 @@ export function SearchFormView(props) {
                     Sign Out
                 </button>
                 {props.isUserSignedInText ? (
-                    <p>User is signed in</p>
+                    <p>User: {props.username}</p>
                 ) : (
                     <p>To save progress sign in</p>
                 )}

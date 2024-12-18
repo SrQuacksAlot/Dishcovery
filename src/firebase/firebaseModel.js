@@ -11,7 +11,8 @@ const auth = getAuth(app);
 const PATH = "dinnerModel69";
 const provider = new GoogleAuthProvider();
 
-function modelToPersistence(model){
+// Convert model data to Firebase-compatible format
+function modelToPersistence(model) {
     function extractDishIdCB(dish) {
         return dish.id;
     }
@@ -19,50 +20,56 @@ function modelToPersistence(model){
     const sortedDishIds = model.dishes.map(extractDishIdCB).sort();
 
     return {
-        guests: model.numberOfGuests,      
-        dishIDs: sortedDishIds,            
+        guests: model.numberOfGuests,
+        dishIDs: sortedDishIds,
         selectedDishID: model.currentDishId,
-        userId: auth.currentUser ? auth.currentUser.uid : null
+        userId: auth.currentUser ? auth.currentUser.uid : null,
+        username: model.username || "", // Save username to Firebase
     };
 }
 
-function persistenceToModel(firebaseData, model){
-    if (!firebaseData) { 
+// Convert Firebase data to model format
+function persistenceToModel(firebaseData, model) {
+    if (!firebaseData) {
+        // Default values if no data exists
         model.dishes = [];
         model.numberOfGuests = 2;
-        model.setCurrentDishId(null); 
+        model.setCurrentDishId(null);
+        model.username = "";
         model.user = null;
         return Promise.resolve(model);
-    }   
-    
+    }
+
     model.user = firebaseData.userId;
-    
+    model.username = firebaseData.username || ""; // Restore username
+
     if (!firebaseData.dishIDs) {
         model.dishes = [];
     } else {
-        function updateDishes(dishes) { 
-            model.dishes = dishes; 
+        function updateDishes(dishes) {
+            model.dishes = dishes;
             model.numberOfGuests = firebaseData.guests || 2;
-            model.setCurrentDishId(firebaseData.selectedDishID); 
+            model.setCurrentDishId(firebaseData.selectedDishID);
         }
-        return getMenuDetails(firebaseData.dishIDs).then(updateDishes); 
+        return getMenuDetails(firebaseData.dishIDs).then(updateDishes);
     }
-      
+
     model.numberOfGuests = firebaseData.guests || 2;
-    model.setCurrentDishId(firebaseData.selectedDishID); 
-    
-    return Promise.resolve(model); 
+    model.setCurrentDishId(firebaseData.selectedDishID);
+    return Promise.resolve(model);
 }
-    
-function saveToFirebase(model){
+
+// Save model data to Firebase
+function saveToFirebase(model) {
     if (model.ready && auth.currentUser) {
         set(ref(db, `${PATH}/${auth.currentUser.uid}`), modelToPersistence(model));
     }
 }
 
-function readFromFirebase(model){
+// Read model data from Firebase
+function readFromFirebase(model) {
     model.ready = false;
-    
+
     // Check if user is authenticated before reading
     if (!auth.currentUser) {
         model.ready = true;
@@ -70,59 +77,71 @@ function readFromFirebase(model){
     }
 
     return get(ref(db, `${PATH}/${auth.currentUser.uid}`))
-        .then(function convertACB(snapshot){
+        .then(function convertACB(snapshot) {
             return persistenceToModel(snapshot.val(), model);
         })
-        .then(function setModelReadyACB(){
+        .then(function setModelReadyACB() {
             model.ready = true;
         });
 }
 
-function connectToFirebase(model, watchFunction){
-    // Set up authentication state listener
+// Connect model to Firebase and set up listeners
+function connectToFirebase(model, watchFunction) {
     onAuthStateChanged(auth, function authStateChangedACB(user) {
-        model.user = user;
-        
         if (user) {
-            // User is signed in, read from Firebase
-            readFromFirebase(model);
-            model.userIsSigned = true;
+            // User is signed in, read data and restore username
+            readFromFirebase(model).then(() => {
+                model.userIsSigned = true;
+                model.setUsername(model.username || user.email.substring(0, 3));
+            });
         } else {
             // User is signed out, reset model
             model.dishes = [];
             model.numberOfGuests = 2;
             model.setCurrentDishId(null);
+            model.username = "";
             model.ready = true;
             model.userIsSigned = false;
         }
     });
 
     function checkModelChangesACB() {
-        return [ model.numberOfGuests, model.currentDishId, model.dishes ];
+        return [model.numberOfGuests, model.currentDishId, model.dishes, model.username];
     }
 
-    function handleModelChangesACB() { 
-        saveToFirebase(model); 
+    function handleModelChangesACB() {
+        saveToFirebase(model);
     }
 
     watchFunction(checkModelChangesACB, handleModelChangesACB);
 }
 
+// Google sign-in and username handling
 function signInWithGoogle() {
-    return signInWithPopup(auth, provider);
+    return signInWithPopup(auth, provider)
+        .then(() => {
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error("Error during sign-in:", error);
+        });
 }
 
+// Google sign-out
 function signOutOfApp() {
-    return signOut(auth);
+    return signOut(auth).then(() => {
+        console.log("User signed out");
+        window.location.reload(); // Reload the page after sign-out
+    });
 }
 
-export { 
-    connectToFirebase, 
-    modelToPersistence, 
-    persistenceToModel, 
-    saveToFirebase, 
+export {
+    connectToFirebase,
+    modelToPersistence,
+    persistenceToModel,
+    saveToFirebase,
     readFromFirebase,
     signInWithGoogle,
     signOutOfApp,
-    auth  // Expose auth object if needed
+    auth, // Expose auth object if needed
 };

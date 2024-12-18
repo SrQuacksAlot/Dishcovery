@@ -20,6 +20,7 @@ const model = {
   isDishDetailsModalOpen: false,
   userIsSignedIn: false,
   flipped: false, // Default state
+  username: "",
 
 
   // Method to set nutrient search parameters
@@ -82,6 +83,15 @@ const model = {
     this.showComplexSearch = !this.showComplexSearch;
   },
 
+  setUsername(newUsername) {
+    this.username = newUsername;
+    this.userIsSignedIn = true;
+  },
+
+  removeUsername(){
+    this.username = "";
+    this.userIsSignedIn = false;
+  },
 
   removeCurrentDishID(){ // back to search button/ on cancel click
     this.currentDishId = null;

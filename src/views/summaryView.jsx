@@ -2,38 +2,47 @@ import {sortIngredients} from "/src/utils/utilities.js";
 import "/src/styles/style.css"
 
 /* Functional JSX component. Name must start with capital letter */
-export function SummaryView(props){
-    /* callback for Array Rendering in TW 1.3 */
-    function ingredientTableRowCB(ingr){
-      return (<tr key={ingr.id} > 
-               <td>{ingr.name}</td>
-               <td>{ingr.aisle}</td>
-               <td className="quantity">{(ingr.amount * props.people).toFixed(2)}</td> 
-               <td>{ingr.unit}</td> 
-             </tr>
-      );
-    }
-    /* Navigation back to search */
-    function handleBackToSearchClick() {window.location.hash = "#/search"; }
-   
+export function SummaryView(props) {
+  function ingredientTableRowCB(ingr) {
+    return (
+      <tr key={ingr.id}> 
+        <td>{ingr.name}</td>
+        <td>{ingr.aisle}</td>
+        <td className="summary-table-quantity">{(ingr.amount * props.people).toFixed(2)}</td> 
+        <td>{ingr.unit}</td> 
+      </tr>
+    );
+  }
+ 
+  function handleBackToSearchClick() {
+    window.location.hash = "#/search"; 
+  }
+ 
   return (
-            <div className="debug">
-              {/* Back to Search Button */}
-              <button className="back-to-search-button" onClick={handleBackToSearchClick}>Back to Search</button>
+    <div className="summary-container">
+      <button 
+        className="summary-back-button" 
+        onClick={handleBackToSearchClick}
+      >
+        ← Back to Search
+      </button>
 
-              <table>
-              <caption>Summary for <span title="nr guests">{props.people}</span> persons:</caption>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Aisle</th>
-                    <th>Quantity</th>
-                    <th>Unit</th>
-                  </tr>
-                </thead>
-                <tbody>{sortIngredients(props.ingredients).map(ingredientTableRowCB)}</tbody>
-              </table>
-            </div>
-          );
+      <table className="summary-table">
+        <caption className="summary-table-caption">
+          Summary for <span className="summary-table-caption-guests" title="nr guests">{props.people}</span> persons:
+        </caption>
+        <thead className="summary-table-header">
+          <tr>
+            <th>Name</th>
+            <th>Aisle</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+          </tr>
+        </thead>
+        <tbody className="summary-table-body">
+          {sortIngredients(props.ingredients).map(ingredientTableRowCB)}
+        </tbody>
+      </table>
+    </div>
+  );
 }
-
