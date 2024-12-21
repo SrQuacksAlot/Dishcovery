@@ -8,7 +8,7 @@ export function SummaryView(props) {
       <tr key={ingr.id}> 
         <td>{ingr.name}</td>
         <td>{ingr.aisle}</td>
-        <td className="summary-table-quantity">{(ingr.amount * props.people).toFixed(2)}</td> 
+        <td className="summary-table-quantity">{(ingr.amount * props.servingsMultiplier).toFixed(1)}</td> 
         <td>{ingr.unit}</td> 
       </tr>
     );
@@ -29,7 +29,7 @@ export function SummaryView(props) {
 
       <table className="summary-table">
         <caption className="summary-table-caption">
-          Summary for <span className="summary-table-caption-guests" title="nr guests">{props.people}</span> persons:
+          Shopping list with servings multiplier of <span className="summary-table-caption-guests" title="nr guests">{props.servingsMultiplier}</span>:
         </caption>
         <thead className="summary-table-header">
           <tr>

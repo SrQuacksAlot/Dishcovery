@@ -6,7 +6,7 @@ const Sidebar = observer(function SidebarRender(props) {
 
     // Event handler for changing the number of guests
     function handleNumberChange(newNumber) {
-        model.setNumberOfGuests(newNumber);
+        model.setservingsMultiplier(newNumber);
     }
 
     // Event handler for selecting a dish
@@ -26,7 +26,7 @@ const Sidebar = observer(function SidebarRender(props) {
 
     return (
         <SidebarView
-            number={model.numberOfGuests}
+            servingsMultiplier={model.servingsMultiplier}
             dishes={model.dishes}
             onNumberChange={handleNumberChange}
             onDishClick={handleDishClick}

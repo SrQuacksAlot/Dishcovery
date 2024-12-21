@@ -1,4 +1,3 @@
-import "/src/styles/DishCard.css";
 
 export function DetailsView(props) {
 

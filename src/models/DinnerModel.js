@@ -6,7 +6,7 @@ import {
 import { resolvePromise } from "/src/utils/resolvePromise";
 
 const model = {
-  numberOfGuests: 2,
+  servingsMultiplier: 1,
   dishes: [],
   currentDishId: null,
   searchParams: {}, // Stores general search parameters
@@ -97,18 +97,19 @@ const model = {
     this.currentDishId = null;
     this.currentDishPromiseState = {};
     this.isDishDetailsModalOpen = false;
+    this.flipped = false;
   },
 
   setCurrentDishId(dishId) { //on select dish
-    this.isDishDetailsModalOpen = !this.isDishDetailsModalOpen;
+    this.isDishDetailsModalOpen = true;
     if (!dishId || dishId === this.currentDishId) return;
     this.currentDishId = dishId;
     resolvePromise(getDishDetails(dishId), this.currentDishPromiseState);
   },
 
-  setNumberOfGuests(number) {
+  setservingsMultiplier(number) {
     if (Number.isInteger(number) && number > 0) {
-      this.numberOfGuests = number;
+      this.servingsMultiplier = number;
     } else {
       throw new Error("Number of guests must be a positive integer");
     }

@@ -17,11 +17,14 @@
   top: 0; /* Positions the sidebar at the top of the viewport */
   left: 0; /* Positions the sidebar at the left of the viewport */
   width: 320px; /* Fixed constant width for the sidebar */
-  height: 99.5vh; /* Sets the height to the full viewport height */
+  height: 100vh; /* Sets the height to the full viewport height */
   border-style: solid;
   background-color: #f0f0f0; /* Light background for better contrast */
   overflow-y: auto; /* Enables vertical scrolling */
+  padding: 16px; /* Ensure equal padding */
+  border: 1px solid #ccc; /* Ensure equal border styling */
 }
+
 
 .sidebar-header{
   text-align: center;
@@ -29,6 +32,67 @@
 .sidebar-buttons{
   text-align: right;
 }
+
+/* General Button Styles */
+.modern-button {
+  background-color: #4a90e2; /* Modern blue */
+  color: white; /* Contrast text color */
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  padding: 10px 16px; /* Padding for a larger clickable area */
+  font-size: 14px; /* Readable font size */
+  cursor: pointer; /* Pointer cursor for interaction */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Hover Effect */
+.modern-button:hover {
+  background-color: #357abd; /* Slightly darker blue on hover */
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Disabled Button */
+.modern-button:disabled {
+  background-color: #ccc; /* Gray color for disabled state */
+  cursor: not-allowed; /* Indicate no interaction */
+}
+
+/* Circular Button for +/- */
+.circle-button {
+  border-radius: 50%; /* Fully round shape */
+  width: 40px;
+  height: 40px; /* Fixed size for consistency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px; /* Larger font size for symbols */
+  margin: 0 8px; /* Spacing between buttons */
+}
+
+/* Servings Multiplier Container */
+.servings-multiplier {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center the content horizontally */
+  margin-top: 16px; /* Spacing from other elements */
+}
+
+/* Servings Multiplier Text */
+.servings-text {
+  font-size: 14px;
+  color: #555; /* Subtle text color */
+  margin: 0 8px; /* Spacing around the text */
+}
+
+/* Number Display */
+.number-display {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 8px; /* Spacing around the number */
+}
+
+
 /* Main Content Styling */
 .mainContent {
   margin-left: 320px; /* Adds a margin to the left of the main content */
@@ -42,28 +106,90 @@
   height: 100vh; 
 }
 
-/* Media Query for Portrait Orientation */
-@media (max-aspect-ratio: 3/4) {
-  .flexParent {
-      flex-direction: column; /* Stack sidebar and main content vertically */
-      /* height: auto; Adjust height dynamically */
+
+/* Search Results Container SearchResultView */
+/* ************************************************************** */
+
+.search-results-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual Dish Card */
+.search-result-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  width: 300px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dish Image */
+.dish-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  object-fit: cover;
+}
+
+/* Dish Title */
+.dish-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; /* For Webkit browsers */
+  -webkit-line-clamp: 2; /* Limits to 2 lines for Webkit */
+  -webkit-box-orient: vertical; /* Required for Webkit */
+  line-clamp: 2; /* Standard property */
+  box-orient: vertical; /* For compatibility */
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .search-results-container {
+      gap: 12px;
+      padding: 16px;
   }
 
-  .sidebar {
-      width: 100%; /* Sidebar takes up full width in portrait mode */
-      height: fit-content; /* Adjust height dynamically */
-      flex: 0 0 auto; /* Adjust sidebar height based on its content */
+  .search-result-card {
+      width: 150px;
+      padding: 12px;
   }
 
-  .mainContent {
-      flex: 1; /* Adjust dynamically */
-      width: 100%; /* Full width in portrait mode */
+  .dish-title {
+      font-size: 14px;
   }
 }
 
 
-
 /* Modern Search Form Styles  SearchFormView*/
+/* ************************************************************** */
 .modern-search-form {
   max-width: 600px;
   margin: 0 auto;
@@ -147,14 +273,42 @@
 }
 
 .btn-secondary {
-  background-color: #f0f0f0;
-  color: #333;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
-  background-color: #d9d9d9;
+  background-color: #357abd;
   transform: translateY(-2px);
 }
+
+.auth-buttons {
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  
+}
+
+
+.sign-buttons{
+  margin-right: 10px; /* Add some space between buttons and label */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+}
+
+.sign-buttons :hover{
+  background-color: #357abd; /* Slightly darker blue on hover */
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
 
 @media (max-width: 480px) {
   .form-actions {
@@ -164,13 +318,172 @@
   .btn {
       width: 100%;
   }
+
+}
+
+/* Nutritional styles */
+/* ******************************************************************** */
+
+.nutritional-search-header {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+/* Container for entire range slider section */
+.nutritional-search-container {
+  color: #333;
+  font-weight: 600;
+
+  display: flex;
+  flex-direction: column;
+  margin: auto auto;
+  background: #f5f5f5;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Container for entire range slider section */
+.nutritional-search-range-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 8px auto;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.nutritional-search-range-label {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 8px auto;
+}
+
+/* Controls the slider component container */
+.nutritional-search-sliders-control {
+  position: relative;
+  min-height: 10px;
+  margin: 5px 0;
+}
+
+/* Container for min/max value inputs */
+.nutritional-search-form-control {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #09a9e9;
+}
+
+/* Styles for the input type range (slider) */
+input[type="range"].nutritional-search-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  width: 100%;
+  position: absolute;
+  background-color: #c6c6c6;
+  pointer-events: none;
+  outline: none;
+}
+
+/* Styling for slider thumb */
+input[type="range"].nutritional-search-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #C6C6C6;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="range"].nutritional-search-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #C6C6C6;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="range"].nutritional-search-slider::-webkit-slider-thumb:hover {
+  background: #f7f7f7;
+}
+
+input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
+  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+
+/* Styling for numeric input fields */
+.nutritional-search-number-input {
+  color: #8a8383;
+  width: 50px;
+  height: 30px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #C6C6C6;
+  outline: none;
+  text-align: center;
+  transition: border-bottom 0.2s ease;
+}
+
+.nutritional-search-number-input:focus {
+  border-bottom: 2px solid #387bbe;
+}
+
+.nutritional-search-number-input::-webkit-inner-spin-button,
+.nutritional-search-number-input::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* Adjusting form control labels for min and max values */
+.nutritional-search-form-control-label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+
+
+
+/* Styling for the nutrient groups */
+.nutrient-group {
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nutrient-group summary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nutrient-group summary .icon {
+  margin-left: auto;
+  transition: transform 0.3s;
+}
+
+.nutrient-group[open] summary .icon {
+  transform: rotate(180deg);
+}
+
+.nutrient-group .nutrient-sliders-container {
+  margin-top: 10px;
 }
 
 /* Ingredient Summary View Styles */
+/* ************************************************************** */
 .summary-container {
-  max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 5rem;
   font-family: 'Arial', sans-serif;
 }
 
@@ -259,3 +572,357 @@
   }
 }
 
+/* Dish Card design  */
+/* ************************************************************** */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.card-background {
+  position: fixed; /* Provides a fixed viewport context */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Horizontally center the card */
+  align-items: center; /* Vertically center the card */
+  z-index: 0;
+}
+
+.dish-card-front,
+.dish-card-back {
+  perspective: 2000px; /* Provides the 3D effect */
+  width: 30vw;
+  height: 70vh;
+  position: absolute; /* Absolute positioning relative to the background */
+  background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
+  border-radius: 16px; /* Match container corners */
+  border: 8px solid #444; /* Dark frame */
+  padding: 16px; /* Prevent edge clinging */
+  backface-visibility: hidden; /* Hide the back when the front is visible */
+  transition: transform 1s cubic-bezier(0.44, -0.48, 0.5, 1.35); /* Smooth transition */
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Allow scrolling for large content */
+  -ms-overflow-style: none; /* IE and Edge hide scrollbar */
+  scrollbar-width: none; /* Firefox hides scrollbar */
+  box-sizing: border-box; /* Include padding and borders in dimensions */
+  justify-content: flex-start; /* Align content to the top */
+}
+
+.dish-card-front {
+  transform: rotateY(0deg); /* Default position for the front */
+  z-index: 2;
+}
+
+.dish-card-back {
+  transform: rotateY(180deg); /* Position the back side for the flip */
+  z-index: 1;
+}
+
+/* Flip the front and back sides based on the flipped class */
+.dish-card-front.flipped {
+  transform: rotateY(-180deg); /* Front side flips out of view */
+  z-index: 1;
+}
+
+.dish-card-back.flipped {
+  transform: rotateY(0deg); /* Back side flips into view */
+  z-index: 2;
+}
+
+
+.dish-card-title {
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  margin: 2% 2%;
+  color: #222;
+  text-transform: uppercase;
+  max-width: 80%;
+  display: inline-block; 
+  vertical-align: top;
+}
+
+.dish-card-score {
+  position: absolute; 
+  top: 1%;
+  right: 1%;
+  max-width: 10%;
+  background: radial-gradient(circle, #ffd700, #e6ac00); 
+  padding: 8px 8px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  display: inline-block; 
+  vertical-align: top; 
+}
+
+.dish-card-image {
+  width: 85%;
+  height: 35%;
+  object-fit: contain;
+  border: 4px solid #444; /* Separate image from content */
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto; /* Center horizontally */
+}
+
+
+.dish-card-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.dish-card-actions button {
+  padding: 6px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #444;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.dish-card-actions button:hover {
+  background-color: #222;
+}
+
+.dish-card-content {
+  z-index: 1; /* Just to ensure it's below the back-actions */
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+}
+.dish-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* space between heading and content */
+}
+
+.dish-section h4 {
+  margin: 0; /* Remove default margin if needed */
+  font-size: 14px;
+  color: #222; 
+  text-transform: uppercase;
+}
+
+.dish-card-ingredients, .dish-card-nutrition, .dish-card-instructions {
+  display: block;
+  width: 100%; 
+  margin: 0;
+  padding: 8px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  color: #333;
+  max-height: 80px;
+  overflow: auto; /* Allow scrolling for large content */
+  -ms-overflow-style: none; /* IE and Edge hide scrollbar */
+  scrollbar-width: none; /* Firefox hides scrollbar */
+  box-sizing: border-box;
+}
+.dish-card-ingredients,
+.dish-card-nutrition {
+  display: table;
+  border-collapse: collapse;
+}
+
+.dish-card-ingredients tr,
+.dish-card-nutrition tr {
+  display: table-row;
+  border-bottom: 1px solid #ddd;
+}
+
+.dish-card-ingredients td,
+.dish-card-nutrition td {
+  display: table-cell;
+  padding: 4px 8px;
+  vertical-align: middle;
+}
+
+
+/* Macronutrient Colors for Frame */
+.protein-dominant {
+  border-color: #f4424295; /* red */
+}
+
+.fat-dominant {
+  border-color: #05fb0d89; /* green */
+}
+
+.carb-dominant {
+  border-color: #000dff7e; /* blue */
+}
+
+
+/* Ingredient Search Specific Styles */
+/* ************************************************************** */
+.ingredient-search-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ingredient-search-header {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.ingredient-search-container {
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.ingredient-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.ingredient-search-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.ingredient-suggestions {
+  position: absolute;
+  top: 100%; /* Positioned immediately after the input */
+  left: 0;
+  width: 100%; /* Exactly same width as the input */
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-top: none; /* Remove top border to sit flush with input */
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin-top: 0; /* Ensure no extra spacing */
+  box-sizing: border-box; /* Ensure border is included in width */
+}
+
+.ingredient-suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ingredient-suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.ingredient-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ingredient-action-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ingredient-action-btn:hover {
+  background-color: #357abd;
+}
+
+.ingredient-action-btn.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.ingredient-action-btn.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.ingredient-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ingredient-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ingredient-list-item-remove {
+  background-color: #ffa0a0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ingredient-list-item-remove:hover {
+  background-color: #ff5252;
+}
+
+
+/* Media Query for Portrait Orientation */
+/* Media Query for Portrait Orientation or Low Aspect Ratios */
+@media (max-aspect-ratio: 4/4) {
+  .flexParent {
+      flex-direction: column; /* Stack sidebar and main content vertically */
+      height: auto; 
+      align-items: center; /* Center children horizontally */
+  }
+
+  .sidebar, .complexSearch {
+    width: 100%; /* Set width to 80% */
+    margin: 0 auto; /* Center horizontally */
+    position: relative; /* Ensure no fixed positioning */
+    height: fit-content; /* Adjust height dynamically */
+    flex: none; /* Prevent flex growth or shrinking */
+    overflow-x: hidden;
+  }
+
+
+  .mainContent {
+    flex: 1; /* Adjust dynamically */
+    width: 100%; /* Full width in portrait mode */
+    margin-left: 0;
+  }
+
+  .dish-card-front,
+  .dish-card-back{
+    width: 70vw;
+    height: 55vh;
+  }
+
+}

@@ -34,10 +34,10 @@ export function SearchFormView(props) {
     return (
         <div className="modern-search-form">
             <div className="auth-buttons">
-                <button  onClick={onSignInClick}>
+                <button className="sign-buttons"  onClick={onSignInClick}>
                     Sign Up / Sign In
                 </button>
-                <button onClick={onSignOutClick}>
+                <button className="sign-buttons" onClick={onSignOutClick}>
                     Sign Out
                 </button>
                 {props.isUserSignedInText ? (
@@ -88,7 +88,7 @@ export function SearchFormView(props) {
                         className="btn btn-secondary" 
                         onClick={handleSummaryClickACB}
                     >
-                        Summary
+                        Shopping List
                     </button>
                 </div>
             </div>

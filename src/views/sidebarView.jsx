@@ -4,13 +4,12 @@ import "/src/styles/style.css";
 export function SidebarView(props) {
     // Sort the dishes before rendering
     const sortedDishes = sortDishes(props.dishes);
-    const totalPrice = (menuPrice(sortedDishes) * props.number).toFixed(2);
 
     // Event handler for increasing the number
-    function increaseNumberACB() { props.onNumberChange(props.number + 1); }
+    function increaseNumberACB() { props.onNumberChange(props.servingsMultiplier + 1); }
 
     // Event handler for decreasing the number
-    function decreaseNumberACB() { props.onNumberChange(props.number - 1); }
+    function decreaseNumberACB() { props.onNumberChange(props.servingsMultiplier - 1); }
 
 
     function showComplexSearch() {
@@ -56,7 +55,7 @@ export function SidebarView(props) {
                         </div>
                     </a>
                 </td>
-                <td>{dishType(dish)}</td>
+                <td>{dish.servings * props.servingsMultiplier}</td>
                 {/* <td className="right-align">{(props.number).toFixed(2)}</td> */}
                 {/* <td className="right-align">{(dish.pricePerServing * props.number).toFixed(2)}</td> */}
             </tr>
@@ -64,24 +63,30 @@ export function SidebarView(props) {
     }
 
     return (
-        <div className="sidebar">
-            <h2 className="sidebar-header">Menu</h2> {/* Title added here */}
+        <div>
+            
             <div className="sidebar-buttons">
-                <button onClick={showComplexSearch}>Show Complex Search</button>
+            <button className="modern-button" onClick={showComplexSearch}>
+                Show Complex Search
+            </button>
+            <h2 className="sidebar-header">Menu</h2> {/* Title added here */}
             </div>
-            <button onClick={decreaseNumberACB} disabled={props.number <= 1}>-</button>
-            <span>{props.number}</span>
-            <button onClick={increaseNumberACB}>+</button>
+            <div className="servings-multiplier">
+            <button className="modern-button circle-button" onClick={decreaseNumberACB} disabled={props.servingsMultiplier <= 1}>
+                -
+            </button>
+            <span className="servings-text">Servings Multiplier</span>
+            <span className="number-display">{props.servingsMultiplier}</span>
+            <button className="modern-button circle-button" onClick={increaseNumberACB}>
+                +
+            </button>
+            </div>
+
 
             <table>
                 <tbody>
                     {sortedDishes.map(dishTableRowCB)}
-                    {/* <tr>
-                        <td></td> 
-                        <td>Total:</td>
-                        <td></td> 
-                        <td className="right-align">{totalPrice}</td>
-                    </tr> */}
+
                 </tbody>
             </table>
             

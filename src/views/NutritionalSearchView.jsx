@@ -1,4 +1,3 @@
-import '/src/styles/Nutritional.css';
 
 export function NutritionalSearchView(props) {
   

@@ -1,4 +1,4 @@
-import '/src/styles/Search.css';
+
 export function SearchResultsView(props) {
     return (
         <div className="search-results-container">
