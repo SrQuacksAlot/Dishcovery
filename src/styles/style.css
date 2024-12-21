@@ -862,21 +862,27 @@ html, body {
 .ingredient-action-btn.btn-secondary:hover {
   background-color: #d0d0d0;
 }
-
 .ingredient-list {
-  list-style-type: none;
-  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next row */
+  gap: 2%; /* Space between items */
+  margin-top: 8px;
 }
 
+/* Each ingredient item */
 .ingredient-list-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 6px 12px;
   background-color: #f4f4f4;
-  padding: 10px 15px;
-  margin-bottom: 10px;
   border-radius: 6px;
+  border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+  font-size: 14px;
+  max-width: calc(33.33% - 8px); /* Adjust to control the width (example: 3 items per row) */
+  flex: 1 1 calc(33.33% - 8px); /* Flexible items with fixed width */
+  box-sizing: border-box;
 }
 
 .ingredient-list-item-remove {
@@ -892,6 +898,48 @@ html, body {
 .ingredient-list-item-remove:hover {
   background-color: #ff5252;
 }
+
+
+
+.ingredient-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 6px;
+  background-color: #f4f4f4;
+  transition: background-color 0.3s;
+}
+
+.ingredient-list-item.included {
+  background-color: #d4fdd4; /* Light green */
+  border: 1px solid #8bc48b; /* Darker green */
+}
+
+.ingredient-list-item.excluded {
+  background-color: #ffcccc; /* Light red */
+  border: 1px solid #ff6b6b; /* Darker red */
+}
+
+.ingredient-list-item .ingredient-name {
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.ingredient-list-item .ingredient-list-item-remove {
+  background: transparent;
+  border: none;
+  color: #d32f2f;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ingredient-list-item .ingredient-list-item-remove:hover {
+  color: #b71c1c;
+}
+
 
 
 /* Media Query for Portrait Orientation */

@@ -14,21 +14,9 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
     };
 
     const handleSelectSuggestion = (suggestion) => {
-        model.addIngredient(suggestion); // Add the selected suggestion as an ingredient
+        model.toggleIngredient(suggestion); // Add the selected suggestion as an ingredient
         model.setCurrentIngredient(""); // Clear the current ingredient input
         model.clearSuggestions(); // Clear suggestions after selection
-    };
-
-    const handleRemoveIngredient = (ingredientToRemove) => {
-        const updatedIngredients = model.searchIngredients.filter(
-            ingredient => ingredient !== ingredientToRemove
-        );
-        
-        model.setSearchIngredients(updatedIngredients);
-    };
-
-    const handleSearchDishes = () => {
-        model.doIngredientSearch(); // Call the method to search dishes based on ingredients
     };
 
     const handleShowSidebar = () => {
@@ -39,14 +27,15 @@ const IngredientSearchPresenter = observer(function IngredientSearchPresenter({ 
         <IngredientSearchView
           ingredient={model.currentIngredient}
           suggestions={model.suggestions}
-          ingredients={model.searchIngredients}
+          includedIngredients={model.includedIngredients} // Pass included ingredients
+          excludedIngredients={model.excludedIngredients} // Pass excluded ingredients
           onIngredientChange={handleIngredientChange}
           onSelectSuggestion={handleSelectSuggestion}
-          onRemoveIngredient={handleRemoveIngredient}
-          onClearSuggestions={() => model.clearSuggestions()} // Wrap in an arrow function
-          onClearCurrentIngredient={() => model.clearCurrentIngredient()} // New prop
-          onSearchDishes={handleSearchDishes} // Pass the search dishes handler
-          onShowSidebar={handleShowSidebar} // Pass the show sidebar handler
+          onRemoveIngredient={(ingredient) => model.removeIngredient(ingredient)}
+          onToggleIngredient={(ingredient) => model.toggleIngredient(ingredient)}
+          onClearSuggestions={() => model.clearSuggestions()} 
+          onClearCurrentIngredient={() => model.clearCurrentIngredient()} 
+          onShowSidebar={handleShowSidebar} 
         />
       );
 });

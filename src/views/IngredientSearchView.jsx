@@ -48,20 +48,34 @@ export function IngredientSearchView(props) {
         </div>
   
         <div>
-          <h4>Selected Ingredients:</h4>
-          <ul className="ingredient-list">
-            {props.ingredients.map((ing, index) => (
-              <li key={index} className="ingredient-list-item">
-                <span>{ing}</span>
-                <button
-                  onClick={() => props.onRemoveIngredient(ing)}
-                  className="ingredient-list-item-remove"
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
+            <ul className="ingredient-list">
+              {/* Combine included and excluded ingredients */}
+              {[...(props.includedIngredients || []), ...(props.excludedIngredients || [])].map(
+                (ingredient, index) => (
+                  <li
+                    key={index}
+                    className={`ingredient-list-item ${
+                      (props.includedIngredients || []).includes(ingredient)
+                        ? "included"
+                        : "excluded"
+                    }`}
+                  >
+                    <span
+                      className="ingredient-name"
+                      onClick={() => props.onToggleIngredient(ingredient)}
+                    >
+                      {ingredient}
+                    </span>
+                    <button
+                      onClick={() => props.onRemoveIngredient(ingredient)}
+                      className="ingredient-list-item-remove"
+                    >
+                      ✖
+                    </button>
+                  </li>
+                )
+              )}
+            </ul>
         </div>
 
 

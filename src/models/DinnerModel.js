@@ -22,24 +22,54 @@ const model = {
   flipped: false, // Default state
   username: "",
 
+  includedIngredients: [], // Tracks ingredients to include
+  excludedIngredients: [], // Tracks ingredients to exclude
 
-  // Method to set nutrient search parameters
-  setNutrientSearchParams(params) {
-    this.nutrientSearchParams = params;
+
+
+
+  toggleShowComplexSearch() {
+    this.showComplexSearch = !this.showComplexSearch;
   },
 
-  // Add this method to add ingredients to searchIngredients
-  addIngredient(ingredient) {
-    // Prevent duplicate ingredients
-    if (!this.searchIngredients.includes(ingredient.trim())) {
-      this.searchIngredients = [...this.searchIngredients, ingredient.trim()];
+
+  doSearch() {
+    const params = {};
+  
+    // Add query
+    if (this.searchParams.query) {
+      params.query = this.searchParams.query;
     }
+  
+    // Add dish type
+    if (this.searchParams.type) {
+      params.type = this.searchParams.type;
+    }
+  
+    // Add included ingredients
+    if (this.includedIngredients.length > 0) {
+      params.includeIngredients = this.includedIngredients.join(",");
+    }
+  
+    // Add excluded ingredients
+    if (this.excludedIngredients.length > 0) {
+      params.excludeIngredients = this.excludedIngredients.join(",");
+    }
+  
+    // Add nutrient search parameters
+    Object.entries(this.nutrientSearchParams).forEach(([key, value]) => {
+      if (value) {
+        params[key] = value;
+      }
+    });
+  
+    // Perform the search
+    resolvePromise(searchDishes(params), this.searchResultsPromiseState);
   },
+  
 
-  // Method to set the current ingredient
-  setCurrentIngredient(value) {
-    this.currentIngredient = value;
-  },
+
+
   // Add dish to the menu
   addToMenu(dishToAdd) {
     this.dishes = [...this.dishes, dishToAdd];
@@ -52,59 +82,18 @@ const model = {
     }
     this.dishes = this.dishes.filter(shouldWeKeepDishCB);
   },
-  // Unified Search Method Using Complex Search
-  doSearch() {
-    const params = {};
-    if (this.searchParams.query) {
-      params.query = this.searchParams.query;
-    }
-    // Add dish type
-    if (this.searchParams.type) {
-      params.type = this.searchParams.type;
-    }
-    // Add ingredients to the search parameters if available
-    if (this.searchIngredients.length > 0) {
-      params.includeIngredients = this.searchIngredients.join(',');
-    }
 
-    // Add nutrient search parameters to the search parameters if available
-    Object.entries(this.nutrientSearchParams).forEach(([key, value]) => {
-      if (value) {
-        params[key] = value;
-      }
-    });
-
-    // Use the complex search function with the combined parameters
-    resolvePromise(searchDishes(params), this.searchResultsPromiseState);
-  },
-
-
-  toggleShowComplexSearch() {
-    this.showComplexSearch = !this.showComplexSearch;
-  },
-
-  setUsername(newUsername) {
-    this.username = newUsername;
-    this.userIsSignedIn = true;
-  },
-
-  removeUsername(){
-    this.username = "";
-    this.userIsSignedIn = false;
-  },
-
-  removeCurrentDishID(){ // back to search button/ on cancel click
-    this.currentDishId = null;
-    this.currentDishPromiseState = {};
-    this.isDishDetailsModalOpen = false;
-    this.flipped = false;
-  },
 
   setCurrentDishId(dishId) { //on select dish
     this.isDishDetailsModalOpen = true;
     if (!dishId || dishId === this.currentDishId) return;
     this.currentDishId = dishId;
     resolvePromise(getDishDetails(dishId), this.currentDishPromiseState);
+  },
+  removeCurrentDishID(){ // back to search button/ on cancel click
+    this.currentDishId = null;
+    this.currentDishPromiseState = {};
+    this.isDishDetailsModalOpen = false;
   },
 
   setservingsMultiplier(number) {
@@ -121,6 +110,54 @@ const model = {
 
   setSearchType(type) {
     this.searchParams.type = type;
+  },
+
+
+  toggleIngredient(ingredient) {
+    if (this.includedIngredients.includes(ingredient)) {
+      // Move from include to exclude
+      this.includedIngredients = this.includedIngredients.filter(
+        (ing) => ing !== ingredient
+      );
+      this.excludedIngredients = [...this.excludedIngredients, ingredient];
+    } else if (this.excludedIngredients.includes(ingredient)) {
+        // Remove from excluded state
+        this.excludedIngredients = this.excludedIngredients.filter(
+          (ing) => ing !== ingredient
+        );
+      this.includedIngredients = [...this.includedIngredients, ingredient];
+    } else {
+          // Add to included state & prevent duplicates
+        if (!this.includedIngredients.includes(ingredient.trim())) {
+          this.includedIngredients = [...this.includedIngredients, ingredient.trim()];
+        }
+    }
+  },
+  
+  addIngredient(ingredient) {
+    // Prevent duplicate ingredients
+    if (!this.searchIngredients.includes(ingredient.trim())) {
+      this.searchIngredients = [...this.searchIngredients, ingredient.trim()];
+    }
+    toggleIngredient(ingredient);
+  },
+
+  // Method to remove an ingredient from searchIngredients
+  removeIngredient(ingredientToRemove) {
+    this.searchIngredients = this.searchIngredients.filter(
+      (ingredient) => ingredient !== ingredientToRemove
+    );
+    this.includedIngredients = this.includedIngredients.filter(
+      (ingredient) => ingredient !== ingredientToRemove
+    );
+    this.excludedIngredients = this.excludedIngredients.filter(
+      (ingredient) => ingredient !== ingredientToRemove
+    );
+  },
+
+  // Method to set the current ingredient
+  setCurrentIngredient(value) {
+    this.currentIngredient = value;
   },
 
   setSearchIngredients(ingredients) {
@@ -156,12 +193,21 @@ const model = {
     }
   },
 
-  // Method to remove an ingredient from searchIngredients
-  removeIngredient(ingredientToRemove) {
-    this.searchIngredients = this.searchIngredients.filter(
-      (ingredient) => ingredient !== ingredientToRemove
-    );
+  // Method to set nutrient search parameters
+  setNutrientSearchParams(params) {
+    this.nutrientSearchParams = params;
   },
+
+  setUsername(newUsername) {
+    this.username = newUsername;
+    this.userIsSignedIn = true;
+  },
+
+  removeUsername(){
+    this.username = "";
+    this.userIsSignedIn = false;
+  },
+
 };
 
 export { model };

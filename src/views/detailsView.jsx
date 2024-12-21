@@ -91,12 +91,12 @@ export function DetailsView(props) {
                     <div className="dish-section">
                         <h4>Instructions</h4>
                         <div className="dish-card-instructions">
-                            <p>{props.dishData.instructions || "No instructions available."}</p>
+                        <p>{props.dishData.instructions || "No instructions available."}</p>
                         </div>
                     </div>
 
                     <div className="dish-section">
-                        <h4>Ingredients</h4>
+                        <h4>Ingredients for {props.dishData.servings || ""} servings </h4>
                         <ul className="dish-card-ingredients">
                             {props.dishData.extendedIngredients.map(renderIngredientRowCB)}
                         </ul>
