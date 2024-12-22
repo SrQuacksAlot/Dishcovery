@@ -73,7 +73,7 @@ For future work we will consider improving the UI/UX further and implementing ad
 #### - Switch to your working directory `cd [working_directory/cloned_repo/etc...]`
 
 ### Install Dependencies: 
-### - Run the following command to install required packages: `npm install`
+#### - Run the following command to install required packages: `npm install`
 ### Start the Development Server: 
-### - Launch the local development server with: `npm run dev`
-
+#### - Launch the local development server with: `npm run dev`
+### You should now have the server up and running, Enjoy and explore.
