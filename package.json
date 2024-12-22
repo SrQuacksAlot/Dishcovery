@@ -1,7 +1,7 @@
 {
-    "name": "npm_tutorial",
+    "name": "dishcovery",
     "version": "2.0.0",
-    "description": "DH2642 tutorial",
+    "description": "DH2642 Project",
     "type": "module",
     "scripts": {
         "start": "vite",
