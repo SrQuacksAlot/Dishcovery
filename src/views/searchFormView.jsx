@@ -34,16 +34,19 @@ export function SearchFormView(props) {
     return (
         <div className="modern-search-form">
             <div className="auth-buttons">
+
                 <button className="sign-buttons"  onClick={onSignInClick}>
-                    Sign Up / Sign In
+                    Sign In
                 </button>
+
                 <button className="sign-buttons" onClick={onSignOutClick}>
                     Sign Out
                 </button>
+
                 {props.isUserSignedInText ? (
                     <p>User: {props.username}</p>
-                ) : (
-                    <p>To save progress sign in</p>
+                )                         : (
+                    <p>To save progress, please sign in</p>
                 )}
                 
             </div>
