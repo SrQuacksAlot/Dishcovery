@@ -68,5 +68,12 @@ For future work we will consider improving the UI/UX further and implementing ad
 - **summaryView.jsx**: Displays a summary of selected recipes.
 
 
+## Setup
+### Clone the Repository:
+#### - Switch to your working directory `cd [working_directory/cloned_repo/etc...]`
 
+### Install Dependencies: 
+### - Run the following command to install required packages: `npm install`
+### Start the Development Server: 
+### - Launch the local development server with: `npm run dev`
 
