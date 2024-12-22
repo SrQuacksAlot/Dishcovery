@@ -107,12 +107,10 @@ export function DetailsView(props) {
                 <div className="dish-card-actions">
                     <button onClick={props.onFlip}>Flip</button>
                 </div>    
+                
 
                 <div className="dish-card-section">
-                    <h4>
-                        Instructions 
-                        <Tooltip text="These are step-by-step directions for preparing the dish." />
-                    </h4>
+                    <h4>Instructions  </h4>
                     <ol className="dish-card-instructions">
                         {props.dishData.instructions
                             ? props.dishData.instructions.split('. ').map(renderInstructionStepCB) // Split by sentence or step
@@ -121,7 +119,7 @@ export function DetailsView(props) {
                     </ol>
                 </div>
 
-                <div className="dish-section">
+                <div className="dish-card-section">
                     <h4>Ingredients for {props.dishData.servings || ""} servings</h4>
                     <table className="dish-card-ingredients">
                         <thead>

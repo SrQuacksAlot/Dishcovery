@@ -724,11 +724,7 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
   background-color: #222;
 }
 
-.dish-card-section h4 {
-  font-size: 14px;
-  color: #222; 
-  text-transform: uppercase;
-}
+
 .dish-card-section {
   z-index: 1; /* Just to ensure it's below the back-actions */
   display: flex;
@@ -744,10 +740,16 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
 }
 
 
+.dish-card-section h4 {
+  position: sticky;
+  font-size: 14px;
+  color: #222; 
+  text-transform: uppercase;
+}
+
 .dish-card-ingredients, .dish-card-nutrition, .dish-card-instructions {
-  list-style-position: inside; /* Align list numbers with text */
   display: block;
-  width: 100%; 
+  width: 100%;
   margin: 0;
   padding: 8px;
   background: rgba(255,255,255,0.8);
@@ -785,6 +787,7 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
 }
 
 .dish-card-instructions li {
+  list-style-position: inside; /* Align list numbers with text */
   padding: 8px;
   margin: 4px 0;
   border-bottom: 1px solid #ddd; /* Separate steps visually */
@@ -809,7 +812,7 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
 
 /* Tooltip container */
 .tooltip-container {
-  position: relative; /* Allows positioning of the tooltip text */
+  position: absolute; /* Allows positioning of the tooltip text */
   display: inline-block;
   cursor: auto; /* Show a pointer to indicate interactivity */
 }
@@ -837,7 +840,7 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
   text-align: center;
   padding: 6px;
   border-radius: 4px;
-  position: absolute;
+  position: relative;
   bottom: 125%; /* Position the tooltip above the icon */
   left: 50%;
   transform: translateX(-50%);
