@@ -34,7 +34,7 @@
 }
 
 /* General Button Styles */
-.modern-button {
+.modern-button, .load-more-btn {
   background-color: #4a90e2; /* Modern blue */
   color: white; /* Contrast text color */
   border: none; /* Remove default border */
@@ -109,6 +109,20 @@
 
 /* Search Results Container SearchResultView */
 /* ************************************************************** */
+
+.search-results-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.load-more-btn {
+  align-self: flex-end; /* Aligns the button to the right */
+  margin-top: 12px; /* Adds space above the button */
+  margin-bottom: 20px; /* Adds more space below the button */
+  margin-right: 20px;
+}
+
+
 
 .search-results-container {
   display: flex;

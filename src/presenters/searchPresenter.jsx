@@ -17,10 +17,14 @@ const Search = observer(function SearchPresenter(props) {
             <SearchResultsView
                 searchResults={model.searchResultsPromiseState.data || []}
                 onDishSelect={handleDishSelectACB}
+                loadMore={onLoadMore}
             />
         );
     }
 
+    function onLoadMore(){
+        model.fetchMoreDishes();
+    }
     // Callback for selecting a dish from search results
     function handleDishSelectACB(dish) {
         model.setCurrentDishId(dish.id);

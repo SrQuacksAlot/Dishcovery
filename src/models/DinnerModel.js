@@ -62,12 +62,50 @@ const model = {
         params[key] = value;
       }
     });
+
+    params.offset = 0;
+
+    // Store the searchParams in the model for reuse
+    this.searchParams = params;
   
     // Perform the search
     resolvePromise(searchDishes(params), this.searchResultsPromiseState);
   },
   
+  fetchMoreDishes() {
+    if (!this.searchParams) {
+        throw new Error("No search parameters set. Perform a search first.");
+    }
 
+    // Initialize offset if it doesn't exist
+    if (!this.searchParams.offset) {
+        this.searchParams.offset = 0;
+    }
+
+    // Increment offset for the next batch
+    this.searchParams.offset += 10;
+
+    // Build parameters for the API call
+    const params = {
+        ...this.searchParams,
+        includeIngredients: this.includedIngredients.join(","),
+        excludeIngredients: this.excludedIngredients.join(","),
+        number: 10,
+    };
+
+    // Fetch the next batch of dishes
+    const existingResults = this.searchResultsPromiseState.data || [];
+    resolvePromise(
+        searchDishes(params).then(newResults => {
+            // Merge existing results with the new ones
+            return [...existingResults, ...newResults];
+        }),
+        this.searchResultsPromiseState
+    );
+  },
+
+
+  
 
 
   // Add dish to the menu
@@ -100,7 +138,7 @@ const model = {
     if (Number.isInteger(number) && number > 0) {
       this.servingsMultiplier = number;
     } else {
-      throw new Error("Number of guests must be a positive integer");
+      throw new Error("multiplier must be a positive integer");
     }
   },
 
