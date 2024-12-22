@@ -7,7 +7,7 @@ export function DetailsView(props) {
         return (
             <tr key={ingredient.id}>
                 <td>{ingredient.name}</td>
-                <td className="right-align">{ingredient.amount}</td>
+                <td>{ingredient.amount}</td>
                 <td>{ingredient.unit}</td>
             </tr>
         );
@@ -17,14 +17,28 @@ export function DetailsView(props) {
         return (
             <tr key={nutrient.id}>
                 <td>{nutrient.name}</td>
-                <td className="right-align">{nutrient.amount}</td>
+                <td>{nutrient.amount}</td>
                 <td>{nutrient.unit}</td>
             </tr>
         );
     }
-
+    // Callback for rendering instructions as steps
+    function renderInstructionStepCB(step, index) {
+        return (
+            <li key={index}>
+            {step}
+            </li>
+        );
+    }
     
-
+    function Tooltip({ text }) {
+        return (
+            <div className="tooltip-container">
+                <span className="tooltip-icon">?</span>
+                <div className="tooltip-text">{text}</div>
+            </div>
+        );
+    }
     // Callback for determining macronutrient-based color class
     function getMacronutrientColorCB(dish) {
         const { protein, fat, carbs } = dish.nutrition.nutrients.reduce(
@@ -71,13 +85,20 @@ export function DetailsView(props) {
                 </div>
 
                 {/* Card Content */}
-                <div className="dish-card-content">
-                    <div className="dish-section">
-                        <h4>Nutrition</h4>
-                        <ul className="dish-card-nutrition">
+                <div className="dish-card-section">
+                    <h4>Nutrition</h4>
+                    <table className="dish-card-nutrition">
+                        <thead>
+                            <tr>
+                                <th>Nutrient</th>
+                                <th>Amount</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {props.dishData.nutrition.nutrients.map(renderNutrientRowCB)}
-                        </ul>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -87,20 +108,33 @@ export function DetailsView(props) {
                     <button onClick={props.onFlip}>Flip</button>
                 </div>    
 
-                <div className="dish-card-content">
-                    <div className="dish-section">
-                        <h4>Instructions</h4>
-                        <div className="dish-card-instructions">
-                        <p>{props.dishData.instructions || "No instructions available."}</p>
-                        </div>
-                    </div>
+                <div className="dish-card-section">
+                    <h4>
+                        Instructions 
+                        <Tooltip text="These are step-by-step directions for preparing the dish." />
+                    </h4>
+                    <ol className="dish-card-instructions">
+                        {props.dishData.instructions
+                            ? props.dishData.instructions.split('. ').map(renderInstructionStepCB) // Split by sentence or step
+                            : <li>No instructions available.</li>
+                        }
+                    </ol>
+                </div>
 
-                    <div className="dish-section">
-                        <h4>Ingredients for {props.dishData.servings || ""} servings </h4>
-                        <ul className="dish-card-ingredients">
+                <div className="dish-section">
+                    <h4>Ingredients for {props.dishData.servings || ""} servings</h4>
+                    <table className="dish-card-ingredients">
+                        <thead>
+                            <tr>
+                                <th>Ingredient</th>
+                                <th>Amount</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {props.dishData.extendedIngredients.map(renderIngredientRowCB)}
-                        </ul>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,3 +1,9 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 .debug {
   height: 100vh;
   border-style: solid;
@@ -586,13 +592,15 @@ input[type="range"].nutritional-search-slider::-webkit-slider-thumb:active {
   }
 }
 
+
+
+
+
+
+
+
 /* Dish Card design  */
 /* ************************************************************** */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
 
 .card-background {
   position: fixed; /* Provides a fixed viewport context */
@@ -609,14 +617,16 @@ html, body {
 
 .dish-card-front,
 .dish-card-back {
-  perspective: 2000px; /* Provides the 3D effect */
-  width: 30vw;
-  height: 70vh;
   position: absolute; /* Absolute positioning relative to the background */
+  width: 40vw; 
+  height: 60vh;
+  max-width: 600px;
+  max-height: 800px;
   background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
-  border-radius: 16px; /* Match container corners */
-  border: 8px solid #444; /* Dark frame */
-  padding: 16px; /* Prevent edge clinging */
+  border-radius: 1rem; /* Match container corners */
+  border: 0.6rem solid #444; /* Dark frame */
+  padding: 2%; /* Prevent edge clinging */
+  
   backface-visibility: hidden; /* Hide the back when the front is visible */
   transition: transform 1s cubic-bezier(0.44, -0.48, 0.5, 1.35); /* Smooth transition */
   display: flex;
@@ -626,26 +636,26 @@ html, body {
   scrollbar-width: none; /* Firefox hides scrollbar */
   box-sizing: border-box; /* Include padding and borders in dimensions */
   justify-content: flex-start; /* Align content to the top */
+
 }
+
 
 .dish-card-front {
   transform: rotateY(0deg); /* Default position for the front */
   z-index: 2;
 }
-
-.dish-card-back {
-  transform: rotateY(180deg); /* Position the back side for the flip */
-  z-index: 1;
-}
-
-/* Flip the front and back sides based on the flipped class */
 .dish-card-front.flipped {
   transform: rotateY(-180deg); /* Front side flips out of view */
   z-index: 1;
 }
 
+.dish-card-back {
+  transform: rotateY(180deg); /* Back side flips in to view */
+  z-index: 1;
+}
+
 .dish-card-back.flipped {
-  transform: rotateY(0deg); /* Back side flips into view */
+  transform: rotateY(0deg); 
   z-index: 2;
 }
 
@@ -695,6 +705,7 @@ html, body {
   display: flex;
   gap: 8px;
   width: 100%;
+  margin-top: 2%;
   justify-content: center;
 }
 
@@ -713,28 +724,28 @@ html, body {
   background-color: #222;
 }
 
-.dish-card-content {
-  z-index: 1; /* Just to ensure it's below the back-actions */
-  padding: 10px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: space-between;
-}
-.dish-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px; /* space between heading and content */
-}
-
-.dish-section h4 {
-  margin: 0; /* Remove default margin if needed */
+.dish-card-section h4 {
   font-size: 14px;
   color: #222; 
   text-transform: uppercase;
 }
+.dish-card-section {
+  z-index: 1; /* Just to ensure it's below the back-actions */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  gap: 2%;
+  box-sizing: border-box;
+  max-height: fit-content; /* Adjust based on header or footer size */
+  overflow: auto; 
+  -ms-overflow-style: none; /* IE and Edge hide scrollbar */
+  scrollbar-width: none; /* Firefox hides scrollbar */
+}
+
 
 .dish-card-ingredients, .dish-card-nutrition, .dish-card-instructions {
+  list-style-position: inside; /* Align list numbers with text */
   display: block;
   width: 100%; 
   margin: 0;
@@ -744,29 +755,39 @@ html, body {
   border: 1px solid #ccc;
   font-size: 12px;
   color: #333;
-  max-height: 80px;
   overflow: auto; /* Allow scrolling for large content */
   -ms-overflow-style: none; /* IE and Edge hide scrollbar */
   scrollbar-width: none; /* Firefox hides scrollbar */
   box-sizing: border-box;
+  justify-content: space-between;
 }
 .dish-card-ingredients,
 .dish-card-nutrition {
   display: table;
   border-collapse: collapse;
 }
-
+.dish-card-nutrition th, .dish-card-ingredients th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #222;
+}
 .dish-card-ingredients tr,
 .dish-card-nutrition tr {
   display: table-row;
   border-bottom: 1px solid #ddd;
 }
 
-.dish-card-ingredients td,
-.dish-card-nutrition td {
-  display: table-cell;
-  padding: 4px 8px;
-  vertical-align: middle;
+.dish-card-nutrition th, .dish-card-ingredients th,
+.dish-card-nutrition td, .dish-card-ingredients td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.dish-card-instructions li {
+  padding: 8px;
+  margin: 4px 0;
+  border-bottom: 1px solid #ddd; /* Separate steps visually */
 }
 
 
@@ -782,6 +803,62 @@ html, body {
 .carb-dominant {
   border-color: #000dff7e; /* blue */
 }
+
+
+
+
+/* Tooltip container */
+.tooltip-container {
+  position: relative; /* Allows positioning of the tooltip text */
+  display: inline-block;
+  cursor: auto; /* Show a pointer to indicate interactivity */
+}
+
+/* Tooltip icon */
+.tooltip-icon {
+  display: inline-block;
+  background-color: #444;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  margin-left: 8px;
+}
+
+/* Tooltip text */
+.tooltip-text {
+  visibility: hidden; /* Initially hidden */
+  background-color: #222; /* Dark background for the tooltip */
+  color: #fff; /* White text */
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 125%; /* Position the tooltip above the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000; /* Ensure it's above other elements */
+  width: max-content; /* Adjust width to fit text */
+  font-size: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0; /* Invisible by default */
+  transition: opacity 0.3s; /* Smooth fade-in and fade-out */
+}
+
+/* Show tooltip on hover */
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1; /* Make it visible */
+}
+
+
+
+
+
 
 
 /* Ingredient Search Specific Styles */
@@ -956,7 +1033,6 @@ html, body {
 
 
 
-/* Media Query for Portrait Orientation */
 /* Media Query for Portrait Orientation or Low Aspect Ratios */
 @media (max-aspect-ratio: 4/4) {
   .flexParent {
