@@ -6,6 +6,8 @@ This project is a web application designed to enable users to discover dishes th
 
 The goal is to create a user-friendly and engaging experience by providing users with advanced filtering options to help facilitate discovering dishes according to their specifications. The application also assists in appreciating the nutritional value of any chosen dish by presenting it as a dish card where various relevant metrics are displayed and emphasized through color coding and a generalized nutrient score.
 
+## Link
+https://dh2642-ht24-project.web.app/react.html
 ---
 
 ## What has been done
@@ -21,7 +23,7 @@ The goal is to create a user-friendly and engaging experience by providing users
 ---
 
 ## What is planned.
-For future work we will consider improving the UI/UX further and implementing additional features that may serve to enhance the utility of this platform.
+- For future work we will consider improving the UI/UX further and implementing additional features that may serve to enhance the utility of this platform.
 ---
 
 ## Project File Structure
@@ -76,4 +78,4 @@ For future work we will consider improving the UI/UX further and implementing ad
 #### - Run the following command to install required packages: `npm install`
 ### Start the Development Server: 
 #### - Launch the local development server with: `npm run dev`
-### You should now have the server up and running, Enjoy and explore.
+### Follow the link provided and Dishcover.
