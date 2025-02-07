@@ -20,7 +20,7 @@ function modelToPersistence(model) {
     const sortedDishIds = model.dishes.map(extractDishIdCB).sort();
 
     return {
-        guests: model.numberOfGuests,
+        servingsMult: model.servingsMultiplier,
         dishIDs: sortedDishIds,
         selectedDishID: model.currentDishId,
         userId: auth.currentUser ? auth.currentUser.uid : null,
@@ -33,7 +33,7 @@ function persistenceToModel(firebaseData, model) {
     if (!firebaseData) {
         // Default values if no data exists
         model.dishes = [];
-        model.numberOfGuests = 2;
+        model.servingsMultiplier = 1;
         model.setCurrentDishId(null);
         model.username = "";
         model.user = null;
@@ -48,13 +48,13 @@ function persistenceToModel(firebaseData, model) {
     } else {
         function updateDishes(dishes) {
             model.dishes = dishes;
-            model.numberOfGuests = firebaseData.guests || 2;
+            model.servingsMultiplier = firebaseData.servingsMult || 1;
             model.setCurrentDishId(firebaseData.selectedDishID);
         }
         return getMenuDetails(firebaseData.dishIDs).then(updateDishes);
     }
 
-    model.numberOfGuests = firebaseData.guests || 2;
+    model.servingsMultiplier = firebaseData.servingsMult || 1;
     model.setCurrentDishId(firebaseData.selectedDishID);
     return Promise.resolve(model);
 }
@@ -97,7 +97,7 @@ function connectToFirebase(model, watchFunction) {
         } else {
             // User is signed out, reset model
             model.dishes = [];
-            model.numberOfGuests = 2;
+            model.servingsMultiplier = 1;
             model.setCurrentDishId(null);
             model.username = "";
             model.ready = true;
@@ -106,7 +106,7 @@ function connectToFirebase(model, watchFunction) {
     });
 
     function checkModelChangesACB() {
-        return [model.numberOfGuests, model.currentDishId, model.dishes, model.username];
+        return [model.servingsMultiplier, model.currentDishId, model.dishes, model.username];
     }
 
     function handleModelChangesACB() {
