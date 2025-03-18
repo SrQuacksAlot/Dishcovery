@@ -1,8 +1,6 @@
 /node_modules/*
 !/node_modules/.gitkeep
-/test
-/tw
-telemetry.config.json
- 
 /dist
+/src/firebase/firebaseConfig.js
+/src/utils/apiConfig.js
 *.cache
